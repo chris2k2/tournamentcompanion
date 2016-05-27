@@ -1,17 +1,12 @@
-package de.cweyermann.btc.server.control;
+package de.cweyermann.btc.server.boundary.rest;
 
 import static com.jayway.restassured.RestAssured.get;
-import static org.assertj.core.api.Assertions.*;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.jayway.restassured.matcher.ResponseAwareMatcher;
-import com.jayway.restassured.response.Response;
-
-import de.cweyermann.btc.server.boundary.StartupRESTServer;
 import de.cweyermann.btc.server.entity.AbstractEntity;
 import io.vertx.core.MultiMap;
 import io.vertx.core.Vertx;

@@ -1,4 +1,4 @@
-package de.cweyermann.btc.server.boundary;
+package de.cweyermann.btc.server.boundary.rest;
 
 import static com.jayway.restassured.RestAssured.get;
 
@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 
 import com.jayway.restassured.RestAssured;
 
+import de.cweyermann.btc.server.boundary.rest.StartupRESTServer;
 import io.vertx.core.Vertx;
 import io.vertx.ext.unit.Async;
 import io.vertx.ext.unit.TestContext;

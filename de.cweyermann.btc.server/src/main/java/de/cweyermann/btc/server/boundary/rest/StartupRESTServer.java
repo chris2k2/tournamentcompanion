@@ -1,10 +1,9 @@
-package de.cweyermann.btc.server.boundary;
+package de.cweyermann.btc.server.boundary.rest;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import de.cweyermann.btc.server.control.AbstractRestControl;
 import de.cweyermann.btc.server.control.*;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServer;
@@ -28,7 +27,7 @@ public class StartupRESTServer extends AbstractVerticle {
 		Map<String, AbstractRestControl<?>> mapping = new HashMap<>();
 
 		mapping.put("/btc/disciplines/:discipline/groups", new ShowGroupOverview());
-		mapping.put("/btc/disciplines/", new GetDisciplines());
+		mapping.put("/btc/disciplines/", new ShowDisciplines());
 		mapping.put("/btc/disciplines/:discipline/groups/:group", new ShowGroup());
 
 		return mapping;
