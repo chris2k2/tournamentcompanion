@@ -10,7 +10,12 @@ dependencies {
 
 	compile 'io.vertx:vertx-core:3.2.1'
 	compile 'io.vertx:vertx-web:3.2.1'
+	
+	compile 'io.vertx:vertx-jdbc-client:3.2.1'
 	compile 'net.sf.ucanaccess:ucanaccess:3.0.5'
+
+	compile 'com.google.guava:guava:19.0'
+
 
     testCompile 'junit:junit:4.12'
     testCompile 'io.vertx:vertx-unit:3.2.1'
