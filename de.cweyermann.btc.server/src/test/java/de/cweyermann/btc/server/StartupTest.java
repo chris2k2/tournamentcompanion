@@ -1,4 +1,4 @@
-package de.cweyermann.btc.server.boundary;
+package de.cweyermann.btc.server;
 
 import static com.jayway.restassured.RestAssured.get;
 
@@ -11,13 +11,14 @@ import org.junit.runner.RunWith;
 
 import com.jayway.restassured.RestAssured;
 
+import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
-import io.vertx.ext.unit.Async;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.junit.VertxUnitRunner;
 
 @RunWith(VertxUnitRunner.class)
-public class StartupRESTServerIT {
+public class StartupTest {
 
 	private Vertx vertx;
 
@@ -31,12 +32,13 @@ public class StartupRESTServerIT {
 	public static void unconfigureRestAssured() {
 		RestAssured.reset();
 	}
-	
 
 	@Before
 	public void setUp(TestContext context) {
 		vertx = Vertx.vertx();
-		vertx.deployVerticle(StartupRESTServer.class.getName(), context.asyncAssertSuccess());
+		DeploymentOptions options = new DeploymentOptions().setConfig(new JsonObject().put("httpserver.port", 8080)
+				.put("tpfile.path", "src/test/resources/msaccess/examples/demo.tp"));
+		vertx.deployVerticle(Startup.class.getName(), options, context.asyncAssertSuccess());
 	}
 
 	@After
@@ -65,9 +67,7 @@ public class StartupRESTServerIT {
 	}
 
 	private void assertStatusCode(String path, int statusCode) {
-		get(path).then()
-	      .assertThat()
-	      .statusCode(statusCode);
+		get(path).then().assertThat().statusCode(statusCode);
 	}
 
 }

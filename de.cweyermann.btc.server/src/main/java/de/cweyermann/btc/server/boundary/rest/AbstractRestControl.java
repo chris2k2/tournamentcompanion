@@ -1,4 +1,4 @@
-package de.cweyermann.btc.server.control;
+package de.cweyermann.btc.server.boundary.rest;
 
 import de.cweyermann.btc.server.entity.AbstractEntity;
 import io.vertx.core.AbstractVerticle;
