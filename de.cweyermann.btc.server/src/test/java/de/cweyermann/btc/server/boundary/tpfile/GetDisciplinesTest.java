@@ -22,7 +22,7 @@ public class GetDisciplinesTest {
 
 	@Test
 	public void demo_hshd() throws Exception {
-		assertDisciplinesAre(Arrays.asList("MS - 3", "MD - 3"), "demo.TP");
+		assertDisciplinesAre(Arrays.asList("MS - 3", "MD - 3"), "demo.tp");
 	}
 
 	private void assertDisciplinesAre(List<String> list, String fileName) {
