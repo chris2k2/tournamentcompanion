@@ -48,7 +48,6 @@ public class StartupTest {
 	@Test
 	public void checkPaths_Works(TestContext context) {
 		start(context, "demo.tp");
-
 		
 		assertOk("/btc/disciplines/mxb/groups/a");
 

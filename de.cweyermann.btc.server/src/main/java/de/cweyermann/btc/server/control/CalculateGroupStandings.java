@@ -1,5 +1,6 @@
 package de.cweyermann.btc.server.control;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,8 @@ public class CalculateGroupStandings {
 		Map<Team, Standing> standings = createEmptyStandings(group);
 
 		applyMatches2Standings(group.getMatches(), standings);
+		
+		setRankings(group.getStandings());
 	}
 
 	private void applyMatches2Standings(List<Match> matches, Map<Team, Standing> standings) {
@@ -60,6 +63,10 @@ public class CalculateGroupStandings {
 		}
 
 		return standings;
+	}
+
+	private void setRankings(List<Standing> standings) {
+		
 	}
 
 }
