@@ -30,48 +30,48 @@ public class Standing extends AbstractEntity implements Comparable<Standing> {
 		return matchesFor;
 	}
 
-	public void setMatchesFor(int matchesFor) {
-		this.matchesFor = matchesFor;
+	public void addMatchesFor(int addedPoints) {
+		this.matchesFor += addedPoints;
 	}
 
 	public int getMatchesAgainst() {
 		return matchesAgainst;
 	}
 
-	public void setMatchesAgainst(int matchesAgainst) {
-		this.matchesAgainst = matchesAgainst;
+	public void addMatchesAgainst(int matchesAgainst) {
+		this.matchesAgainst += matchesAgainst;
 	}
 
 	public int getSetsFor() {
 		return setsFor;
 	}
 
-	public void setSetsFor(int setsFor) {
-		this.setsFor = setsFor;
+	public void addSetsFor(int setsFor) {
+		this.setsFor += setsFor;
 	}
 
 	public int getSetsAgainst() {
 		return setsAgainst;
 	}
 
-	public void setSetsAgainst(int setsAgainst) {
-		this.setsAgainst = setsAgainst;
+	public void addSetsAgainst(int setsAgainst) {
+		this.setsAgainst += setsAgainst;
 	}
 
 	public int getPointsFor() {
 		return pointsFor;
 	}
 
-	public void setPointsFor(int pointsFor) {
-		this.pointsFor = pointsFor;
+	public void addPointsFor(int pointsFor) {
+		this.pointsFor += pointsFor;
 	}
 
 	public int getPointsAgainst() {
 		return pointsAgainst;
 	}
 
-	public void setPointsAgainst(int pointsAgainst) {
-		this.pointsAgainst = pointsAgainst;
+	public void addPointsAgainst(int pointsAgainst) {
+		this.pointsAgainst += pointsAgainst;
 	}
 
 	public Standing(Team player, int matchesFor, int matchesAgainst, int setsFor, int setsAgainst, int pointsFor,
@@ -83,13 +83,20 @@ public class Standing extends AbstractEntity implements Comparable<Standing> {
 		this.setsAgainst = setsAgainst;
 		this.pointsFor = pointsFor;
 		this.pointsAgainst = pointsAgainst;
-		this.ranking = ranking;
+		this.setRanking(ranking);
 	}
 
 	@Override
 	public int compareTo(Standing o) {
-		return ranking - o.ranking;
+		return getRanking() - o.getRanking();
 	}
 
+	public int getRanking() {
+		return ranking;
+	}
+
+	public void setRanking(int ranking) {
+		this.ranking = ranking;
+	}
 
 }

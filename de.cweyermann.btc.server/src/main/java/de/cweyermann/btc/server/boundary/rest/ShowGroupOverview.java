@@ -1,5 +1,6 @@
 package de.cweyermann.btc.server.boundary.rest;
 
+import de.cweyermann.btc.server.boundary.tpfile.GetGroup;
 import de.cweyermann.btc.server.control.CalculateGroupStandings;
 import de.cweyermann.btc.server.entity.Groups;
 import io.vertx.core.MultiMap;
@@ -13,15 +14,15 @@ import io.vertx.core.MultiMap;
 public class ShowGroupOverview extends AbstractRestControl<Groups> {
 
 	private CalculateGroupStandings calculate;
+	private GetGroup getGroup;
 
-	public ShowGroupOverview(CalculateGroupStandings calculate) {
+	public ShowGroupOverview(CalculateGroupStandings calculate, GetGroup getGroup) {
 		this.calculate = calculate;
+		this.getGroup = getGroup;
 	}
-	
+
 	@Override
 	public Groups route(MultiMap params) {
-		return calculate.getAll(params.get("discipline"));
+		return new Groups();
 	}
-
-
 }

@@ -7,7 +7,8 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.json.Json;
 import io.vertx.ext.web.RoutingContext;
 
-public abstract class AbstractRestControl<T extends AbstractEntity> extends AbstractVerticle implements Handler<RoutingContext> {
+public abstract class AbstractRestControl<T extends AbstractEntity> extends AbstractVerticle
+		implements Handler<RoutingContext> {
 
 	public abstract T route(MultiMap params);
 
@@ -15,7 +16,8 @@ public abstract class AbstractRestControl<T extends AbstractEntity> extends Abst
 		T entry = route(context.request().params());
 
 		String encodePrettily = Json.encodePrettily(entry);
-		context.response().putHeader("content-type", "application/json; charset=utf-8").end(encodePrettily);
+		context.response().putHeader("content-type", "application/json; charset=utf-8")
+				.putHeader("cache-control", "public, max-age=300").end(encodePrettily);
 	}
-	
+
 }

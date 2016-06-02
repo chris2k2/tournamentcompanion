@@ -26,7 +26,7 @@ public class GetDisciplinesTest {
 	}
 
 	private void assertDisciplinesAre(List<String> list, String fileName) {
-		GetDisciplines gd = new GetDisciplines(TestUtils.getTpFilePath(fileName));
+		GetDisciplines gd = new GetDisciplines(TestUtils.getConnection(fileName));
 		assertEquals(list, gd.getAll().getDiscs());
 	}
 }

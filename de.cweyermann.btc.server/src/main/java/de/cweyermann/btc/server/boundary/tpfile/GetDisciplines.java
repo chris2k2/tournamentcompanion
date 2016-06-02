@@ -1,5 +1,6 @@
 package de.cweyermann.btc.server.boundary.tpfile;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -7,7 +8,7 @@ import de.cweyermann.btc.server.entity.Disciplines;
 
 public class GetDisciplines extends AbstractTpFileControl {
 
-	public GetDisciplines(String filePath) {
+	public GetDisciplines(Connection filePath) {
 		super(filePath);
 	}
 

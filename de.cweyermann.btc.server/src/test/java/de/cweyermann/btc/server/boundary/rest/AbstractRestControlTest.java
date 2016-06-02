@@ -49,13 +49,12 @@ public class AbstractRestControlTest {
 	}
 
 	@Test
-	public void mockedDummy_IsCalled() {
+	public void mockedDummy_IsCalled() throws InterruptedException {
 		HttpServer server = vertx.createHttpServer();
 		Router router = Router.router(vertx);
-		router.route("/asdf").handler(new DummyControl());
-
+		router.route("/btc/asdf").handler(new DummyControl());
 		server.requestHandler(router::accept).listen(8080);
 
-		get("/asdf").then().assertThat().statusCode(200).and().header("content-type", "application/json; charset=utf-8");
+		get("/btc/asdf").then().assertThat().statusCode(200).and().header("content-type", "application/json; charset=utf-8");
 	}
 }
