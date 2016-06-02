@@ -21,8 +21,6 @@ public class Match extends AbstractEntity {
 
 	private boolean walkoverTeam2;
 
-	private boolean done;
-
 	public Match() {
 
 	}

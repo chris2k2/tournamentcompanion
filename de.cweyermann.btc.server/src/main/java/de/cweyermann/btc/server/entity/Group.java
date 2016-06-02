@@ -3,8 +3,6 @@ package de.cweyermann.btc.server.entity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 public class Group extends AbstractEntryWithId {
 

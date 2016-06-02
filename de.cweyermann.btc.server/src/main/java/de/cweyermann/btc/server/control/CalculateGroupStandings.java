@@ -1,6 +1,7 @@
 package de.cweyermann.btc.server.control;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.cweyermann.btc.server.entity.Group;
@@ -13,11 +14,11 @@ public class CalculateGroupStandings {
 	public void add(Group group) {
 		Map<Team, Standing> standings = createEmptyStandings(group);
 
-		evaluateMatches(group, standings);
+		applyMatches2Standings(group.getMatches(), standings);
 	}
 
-	private void evaluateMatches(Group group, Map<Team, Standing> standings) {
-		for (Match match : group.getMatches()) {
+	private void applyMatches2Standings(List<Match> matches, Map<Team, Standing> standings) {
+		for (Match match : matches) {
 			applyMatch2Standing(match, standings.get(match.getTeam1()));
 			applyMatch2Standing(match, standings.get(match.getTeam2()));
 		}
@@ -34,7 +35,7 @@ public class CalculateGroupStandings {
 
 		if (you.equals(match.getWinner())) {
 			standing.addMatchesFor(2);
-		} else {
+		} else if (oponent.equals(match.getWinner())) {
 			standing.addMatchesAgainst(2);
 		}
 	}
