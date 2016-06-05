@@ -55,10 +55,11 @@ public class StartupTest {
 		assertNotFound("/btc/disciplines/HDA/funny");
 	}
 
-	private void start(TestContext context, String name) {
+	private void start(TestContext context, String name) throws InterruptedException {
 		DeploymentOptions options = new DeploymentOptions().setConfig(new JsonObject().put("httpserver.port", 8080)
 				.put("tpfile.path", TestUtils.getPath(name)));
 		vertx.deployVerticle(Startup.class.getName(), options, context.asyncAssertSuccess());
+		Thread.sleep(3000);
 	}
 
 	@Test(expected=TpFileConnectionInvalid.class)
