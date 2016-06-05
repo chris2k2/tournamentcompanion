@@ -48,7 +48,6 @@ public class StartupTest {
 	@Test
 	public void checkPaths_Works(TestContext context) throws InterruptedException {
 		start(context, "demo.tp");
-		Thread.sleep(5000);
 		
 		assertOk("/btc/disciplines/mxb/groups/a");
 
