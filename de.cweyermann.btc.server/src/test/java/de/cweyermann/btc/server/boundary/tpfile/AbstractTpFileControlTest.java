@@ -7,7 +7,7 @@ public class AbstractTpFileControlTest {
 	private class SpecificMsAccessControl extends AbstractTpFileControl {
 
 		public SpecificMsAccessControl(String filePath) {
-			super(filePath);
+			super(TestUtils.getConnection(filePath));
 		}
 
 		public void fails() {
@@ -17,17 +17,17 @@ public class AbstractTpFileControlTest {
 
 	@Test(expected = TpFileConnectionInvalid.class)
 	public void notExistingFileGiven_InvalidArgumentException() {
-		new SpecificMsAccessControl("msaccess/examples/doesnotexist.TP");
+		new SpecificMsAccessControl("doesnotexist.TP");
 	}
 
 	@Test(expected = TpFileConnectionInvalid.class)
 	public void incorrectFileGiven_InvalidArgumentException() {
-		new SpecificMsAccessControl("src/test/resources/msaccess/examples/test.txt");
+		new SpecificMsAccessControl("test.txt");
 	}
 
 	@Test
 	public void correctFileGiven_opened() {
-		new SpecificMsAccessControl("src/test/resources/msaccess/examples/minimum.TP");
+		new SpecificMsAccessControl("minimum.TP");
 	}
 	
 

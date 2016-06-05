@@ -1,19 +1,19 @@
 package de.cweyermann.btc.server.entity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 public class Group extends AbstractEntryWithId {
 
-	private SortedSet<Standing> standings = new TreeSet<>();
+	private List<Standing> standings = new ArrayList<>();
 
 	private List<Match> matches = new ArrayList<>();
 
 	private List<Team> teams = new ArrayList<>();
 
-	public SortedSet<Standing> getStandings() {
+	public List<Standing> getStandings() {
+		Collections.sort(standings);
 		return standings;
 	}
 
