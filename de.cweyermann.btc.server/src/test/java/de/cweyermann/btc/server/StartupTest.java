@@ -59,7 +59,7 @@ public class StartupTest {
 		DeploymentOptions options = new DeploymentOptions().setConfig(new JsonObject().put("httpserver.port", 8080)
 				.put("tpfile.path", TestUtils.getPath(name)));
 		vertx.deployVerticle(Startup.class.getName(), options, context.asyncAssertSuccess());
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 	}
 
 	@Test(expected=TpFileConnectionInvalid.class)
