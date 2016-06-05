@@ -198,4 +198,9 @@ public class Match extends AbstractEntity {
 		return set1 != null || walkoverTeam1 || walkoverTeam2;
 	}
 
+	
+	@Override
+	public String toString() {
+		return team1.getId() + " vs. " + team2.getId() + " " + set1 + " " + set2 + " " + set3;
+	}
 }

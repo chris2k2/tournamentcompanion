@@ -21,4 +21,9 @@ public class Team extends AbstractEntryWithId {
 		this.player2 = player2;
 	}
 	
+	@Override
+	public String toString() {
+		return getId() + "";
+	}
+	
 }

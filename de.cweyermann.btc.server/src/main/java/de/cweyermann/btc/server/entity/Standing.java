@@ -99,4 +99,10 @@ public class Standing extends AbstractEntity implements Comparable<Standing> {
 		this.ranking = ranking;
 	}
 
+	@Override
+	public String toString() {
+		return ranking + ". Team" + player.getId() + ", M: " + matchesFor + ":" + matchesAgainst + ", S:" + setsFor + ":" + setsAgainst
+				+ ", P: " + pointsFor + ":" + pointsAgainst;
+	}
+
 }

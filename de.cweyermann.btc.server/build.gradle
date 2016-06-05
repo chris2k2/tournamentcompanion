@@ -15,11 +15,12 @@ dependencies {
 	compile 'net.sf.ucanaccess:ucanaccess:3.0.5'
 
 	compile 'com.google.guava:guava:19.0'
-
+	compile 'org.apache.logging.log4j:log4j-api:2.6'
+  	compile 'org.apache.logging.log4j:log4j-core:2.6'
 
     testCompile 'junit:junit:4.12'
     testCompile 'io.vertx:vertx-unit:3.2.1'
     testCompile 'com.jayway.restassured:rest-assured:2.4.0'
     testCompile 'org.assertj:assertj-core:2.0.0'
-    
+
 }
