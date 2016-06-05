@@ -63,13 +63,13 @@ public class StartupTest {
 	}
 
 	@Test(expected=TpFileConnectionInvalid.class)
-	public void noTpFile_startupFails(TestContext context) {
+	public void noTpFile_startupFails(TestContext context) throws InterruptedException {
 		start(context, "asdf.txt");
 	}
 	
 
 	@Test(expected=TpFileConnectionInvalid.class)
-	public void invalidFile_failsOnStartup(TestContext context) {
+	public void invalidFile_failsOnStartup(TestContext context) throws InterruptedException {
 		start(context, "doesNotExist.txt");
 	}
 
