@@ -28,9 +28,10 @@ public class CalculateGroupStandings {
 	private static final Logger LOG = LogManager.getLogger(CalculateGroupStandings.class.getName());
 
 	public void add(Group group) {
-		calculateStandings(group);
-
-		setRankings(group.getStandings(), group.getMatches());
+		if (!group.isKo()) {
+			calculateStandings(group);
+			setRankings(group.getStandings(), group.getMatches());
+		}
 	}
 
 	private void calculateStandings(Group group) {
@@ -127,7 +128,7 @@ public class CalculateGroupStandings {
 
 	private void solveMultiwayTie(Collection<Standing> standings4Key, List<Match> matches) {
 		LOG.info(standings4Key.size() + "-way Tie encountered");
-		
+
 		List<Standing> standings = standings4Key.stream().sorted((s1, s2) -> compareBySets(s1, s2))
 				.collect(Collectors.toList());
 		apply(standings);
@@ -188,8 +189,7 @@ public class CalculateGroupStandings {
 	}
 
 	private void apply(Collection<Standing> standings4Key) {
-		Optional<Integer> min = standings4Key.stream().map(s -> s.getRanking())
-				.min(Comparator.comparing(i -> i));
+		Optional<Integer> min = standings4Key.stream().map(s -> s.getRanking()).min(Comparator.comparing(i -> i));
 
 		if (min.isPresent()) {
 			int lowestRanking = min.get();
