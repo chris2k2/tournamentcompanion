@@ -30,13 +30,14 @@ public class GetGroup extends AbstractTpFileControl {
 	}
 
 	public void fillMatches(Group group) {
+		int id = group.getId();
 		ResultSet resultSet = executeSql("SELECT hometeam.entry, awayteam.entry, "
 				+ "thematch.team1set1, thematch.team2set1, thematch.team1set2, "
 				+ "thematch.team2set2, thematch.team1set3, thematch.team2set3, "
 				+ "hometeam.walkover, awayteam.walkover	"
 				+ "FROM	PlayerMatch theMatch INNER JOIN PlayerMatch AS hometeam ON thematch.van1 = hometeam.planning "
 				+ "INNER JOIN PlayerMatch AS awayteam ON thematch.van2 = awayteam.planning " + "WHERE thematch.draw = "
-				+ group.getId() + ";");
+				+ id + " AND hometeam.draw=" + id + " AND awayteam.draw=" + id + ";");
 
 		try {
 			convertMatches(group, resultSet);

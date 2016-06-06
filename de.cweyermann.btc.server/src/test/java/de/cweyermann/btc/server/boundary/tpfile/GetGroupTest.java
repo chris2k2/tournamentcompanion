@@ -45,5 +45,16 @@ public class GetGroupTest {
 		assertEquals("Bakker", group.getTeams().get(0).getPlayer1().getSurname());
 		assertEquals("Velden", group.getTeams().get(0).getPlayer2().getSurname());
 	}
+
+	@Test
+	public void differentDraws_distinguishes()
+	{
+		GetGroup uut = new GetGroup(TestUtils.getConnection("ko.tp"));
+
+		Group group = uut.get(10);
+
+		assertEquals(3, group.getMatches().size());
+	}
+
 	
 }
