@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import org.junit.Test;
 
 import de.cweyermann.btc.server.entity.Groups;
-import de.cweyermann.btc.server.entity.WithChilds;
 
 public class GetGroupsTest {
 
