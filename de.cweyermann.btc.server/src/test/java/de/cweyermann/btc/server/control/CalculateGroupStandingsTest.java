@@ -114,7 +114,7 @@ public class CalculateGroupStandingsTest {
 		Team team3 = new Team();
 		Team team4 = new Team();
 		List<Match> matches = new ArrayList<Match>();
-		matches.add(new Match(team1, team2, "21-23", "21-23", null, false, false, 0, 0));
+		matches.add(new Match(team2, team1, "25-23", "25-23", null, false, false, 0, 0));
 		matches.add(new Match(team1, team3, "21-3", "21-2", null, false, false, 0, 0));
 		matches.add(new Match(team1, team4, "21-1", "21-1", null, false, false, 0, 0));
 		matches.add(new Match(team2, team3, "21-3", "21-2", null, false, false, 0, 0));
@@ -271,6 +271,8 @@ public class CalculateGroupStandingsTest {
 		g.addTeam(team2);
 		g.addMatch(new Match(team1, team2, "0-21", "0-21", null, false, false, 0, 0));
 		g.setKo(true);
+		
+		calc.add(g);
 		
 		assertTrue(g.getStandings().isEmpty());
 	}
