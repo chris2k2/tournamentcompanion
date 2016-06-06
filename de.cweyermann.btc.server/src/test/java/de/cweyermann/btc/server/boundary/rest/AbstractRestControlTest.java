@@ -11,6 +11,7 @@ import de.cweyermann.btc.server.entity.AbstractEntity;
 import io.vertx.core.MultiMap;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
+import io.vertx.ext.unit.Async;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.junit.VertxUnitRunner;
 import io.vertx.ext.web.Router;
@@ -49,12 +50,20 @@ public class AbstractRestControlTest {
 	}
 
 	@Test
-	public void mockedDummy_IsCalled() throws InterruptedException {
+	public void mockedDummy_IsCalled(TestContext context) throws InterruptedException {
+		Async async = context.async();
+		
 		HttpServer server = vertx.createHttpServer();
 		Router router = Router.router(vertx);
 		router.route("/btc/asdf").handler(new DummyControl());
-		server.requestHandler(router::accept).listen(8080);
+		server.requestHandler(router::accept);
+		server.listen(8080, ar -> {
+			  context.assertTrue(ar.succeeded());
+			  async.complete();
+			});
 
+		async.awaitSuccess();
+		
 		get("/btc/asdf").then().assertThat().statusCode(200).and().header("content-type", "application/json; charset=utf-8");
 	}
 }
