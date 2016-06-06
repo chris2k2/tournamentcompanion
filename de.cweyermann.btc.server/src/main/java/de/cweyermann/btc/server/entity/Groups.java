@@ -1,5 +1,5 @@
 package de.cweyermann.btc.server.entity;
 
-public class Groups extends WithChilds {
+public class Groups extends AbstractEntityWithChilds {
 
 }

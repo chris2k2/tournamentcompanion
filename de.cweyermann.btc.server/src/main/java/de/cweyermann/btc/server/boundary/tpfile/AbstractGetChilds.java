@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import de.cweyermann.btc.server.entity.WithChilds;
+import de.cweyermann.btc.server.entity.AbstractEntityWithChilds;
 
-public abstract class AbstractGetChilds<T extends WithChilds> extends AbstractTpFileControl {
+public abstract class AbstractGetChilds<T extends AbstractEntityWithChilds> extends AbstractTpFileControl {
 
 	public AbstractGetChilds(Connection connection) {
 		super(connection);

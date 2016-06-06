@@ -3,7 +3,7 @@ package de.cweyermann.btc.server.entity;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class WithChilds extends AbstractEntity {
+public abstract class AbstractEntityWithChilds extends AbstractEntity {
 
 	private Map<Integer, String> id2Names = new HashMap<>();
 	
