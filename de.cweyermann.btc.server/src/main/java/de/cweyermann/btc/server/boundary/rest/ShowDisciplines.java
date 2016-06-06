@@ -13,7 +13,7 @@ public class ShowDisciplines extends AbstractRestControl<Disciplines> {
 
 	@Override
 	public Disciplines route(MultiMap params) {
-		return getDisciplines.getAll();
+		return getDisciplines.all();
 	}
 
 }

@@ -1,6 +1,7 @@
 package de.cweyermann.btc.server.boundary.tpfile;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.sql.SQLException;
 
@@ -53,6 +54,8 @@ public class GetGroupTest {
 
 		Group group = uut.get(10);
 
+		assertEquals("MS - 3", group.getName());
+		assertTrue(group.isKo());
 		assertEquals(3, group.getMatches().size());
 	}
 

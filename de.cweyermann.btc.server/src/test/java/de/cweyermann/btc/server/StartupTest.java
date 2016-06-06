@@ -12,10 +12,10 @@ import org.junit.runner.RunWith;
 import com.jayway.restassured.RestAssured;
 
 import de.cweyermann.btc.server.boundary.tpfile.TestUtils;
-import de.cweyermann.btc.server.boundary.tpfile.TpFileConnectionInvalid;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.unit.Async;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.junit.VertxUnitRunner;
 
@@ -47,33 +47,37 @@ public class StartupTest {
 
 	@Test
 	public void checkPaths_Works(TestContext context) throws InterruptedException {
-		start(context, "demo.tp");
-		
+		start(context, "demo.tp", true);
+
 		assertOk("/btc/disciplines/mxb/groups/a");
 
 		assertNotFound("/btASDF");
 		assertNotFound("/btc/disciplines/HDA/funny");
 	}
 
-	private void start(TestContext context, String name) throws InterruptedException {
-		DeploymentOptions options = new DeploymentOptions().setConfig(new JsonObject().put("httpserver.port", 8080)
-				.put("tpfile.path", TestUtils.getPath(name)));
-		vertx.deployVerticle(Startup.class.getName(), options, context.asyncAssertSuccess());
-		Thread.sleep(5000);
+	private void start(TestContext context, String name, boolean starts) throws InterruptedException {
+		Async async = context.async();
+
+		DeploymentOptions options = new DeploymentOptions()
+				.setConfig(new JsonObject().put("httpserver.port", 8080).put("tpfile.path", TestUtils.getPath(name)));
+		vertx.deployVerticle(Startup.class.getName(), options, ar -> {
+			context.assertEquals(starts, ar.succeeded());
+			async.complete();
+		});
+
+		async.awaitSuccess();
 	}
 
-	@Test(expected=TpFileConnectionInvalid.class)
+	@Test
 	public void noTpFile_startupFails(TestContext context) throws InterruptedException {
-		start(context, "asdf.txt");
+		start(context, "asdf.txt", false);
 	}
-	
 
-	@Test(expected=TpFileConnectionInvalid.class)
+	@Test
 	public void invalidFile_failsOnStartup(TestContext context) throws InterruptedException {
-		start(context, "doesNotExist.txt");
+		start(context, "doesNotExist.txt", false);
 	}
 
-	
 	private void assertOk(String path) {
 		assertStatusCode(path, 200);
 	}

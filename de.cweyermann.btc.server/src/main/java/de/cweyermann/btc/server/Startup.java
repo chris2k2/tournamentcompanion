@@ -14,6 +14,7 @@ import de.cweyermann.btc.server.boundary.tpfile.GetGroup;
 import de.cweyermann.btc.server.boundary.tpfile.TpFileConnectionInvalid;
 import de.cweyermann.btc.server.control.CalculateGroupStandings;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Future;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
 
@@ -25,14 +26,15 @@ public class Startup extends AbstractVerticle {
 	private ShowClubs showClubs;
 	private ShowGroup showGroup;
 
-	public void start() {
+	@Override
+	public void start(Future<Void> startFuture) throws Exception {
 		String filePath = config().getString("tpfile.path");
 		Integer port = config().getInteger("httpserver.port");
 
 		Connection dbConnection = makeConnection(filePath);
 		init(dbConnection);
 
-		startHttpServer(port);
+		startHttpServer(port, startFuture);
 	}
 
 	private Connection makeConnection(String filePath) {
@@ -40,9 +42,7 @@ public class Startup extends AbstractVerticle {
 			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
 
 			File accessFile = new File(filePath);
-			if (!accessFile.exists()) {
-				throw new TpFileConnectionInvalid("File " + filePath + " is invalid!");
-			}
+			if (!accessFile.exists()) { throw new TpFileConnectionInvalid("File " + filePath + " is invalid!"); }
 
 			return DriverManager.getConnection("jdbc:ucanaccess://" + filePath, "", "d4R2GY76w2qzZ");
 		} catch (ClassNotFoundException | SQLException e) {
@@ -50,7 +50,7 @@ public class Startup extends AbstractVerticle {
 		}
 	}
 
-	private void startHttpServer(Integer port) {
+	private void startHttpServer(Integer port, Future<Void> startFuture) {
 		HttpServer server = vertx.createHttpServer();
 		Router router = Router.router(vertx);
 
@@ -59,7 +59,7 @@ public class Startup extends AbstractVerticle {
 		router.route("/btc/disciplines/:disciplines/groups/").handler(showgroupOverview);
 		router.route("/btc/disciplines/:disciplines/groups/:group").handler(showGroup);
 
-		server.requestHandler(router::accept).listen(port);
+		server.requestHandler(router::accept).listen(port, x -> startFuture.complete());
 	}
 
 	private void init(Connection dbConnection) {

@@ -6,15 +6,28 @@ import java.util.List;
 
 public class Group extends AbstractEntryWithId {
 
+	private String name;
+	
+	private boolean ko;
+	
 	private List<Standing> standings = new ArrayList<>();
 
 	private List<Match> matches = new ArrayList<>();
 
 	private List<Team> teams = new ArrayList<>();
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public List<Standing> getStandings() {
-		Collections.sort(standings);
-		return standings;
+		ArrayList<Standing> list = new ArrayList<>(standings);
+		Collections.sort(list);
+		return list;
 	}
 
 	public void addStanding(Standing standing) {
@@ -22,7 +35,9 @@ public class Group extends AbstractEntryWithId {
 	}
 
 	public List<Match> getMatches() {
-		return matches;
+		ArrayList<Match> list = new ArrayList<>(matches);
+		Collections.sort(list, (o1, o2) -> o1.getMatchnr() - o2.getMatchnr());
+		return list;
 	}
 
 	public void addMatch(Match match) {
@@ -35,5 +50,13 @@ public class Group extends AbstractEntryWithId {
 
 	public void addTeam(Team team) {
 		teams.add(team);
+	}
+
+	public boolean isKo() {
+		return ko;
+	}
+
+	public void setKo(boolean ko) {
+		this.ko = ko;
 	}
 }

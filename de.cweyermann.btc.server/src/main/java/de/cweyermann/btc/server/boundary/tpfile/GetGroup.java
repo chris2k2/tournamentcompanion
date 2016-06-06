@@ -13,6 +13,7 @@ import de.cweyermann.btc.server.entity.Team;
 
 public class GetGroup extends AbstractTpFileControl {
 
+	private static final int KO_TYPE = 1;
 	private Map<Integer, Team> teamById = new HashMap<>();
 
 	public GetGroup(Connection filePath) {
@@ -29,15 +30,16 @@ public class GetGroup extends AbstractTpFileControl {
 		return group;
 	}
 
-	public void fillMatches(Group group) {
+	private void fillMatches(Group group) {
 		int id = group.getId();
 		ResultSet resultSet = executeSql("SELECT hometeam.entry, awayteam.entry, "
 				+ "thematch.team1set1, thematch.team2set1, thematch.team1set2, "
 				+ "thematch.team2set2, thematch.team1set3, thematch.team2set3, "
-				+ "hometeam.walkover, awayteam.walkover	"
+				+ "hometeam.walkover, awayteam.walkover, Draw.name, Draw.DrawType, thematch.matchnr, thematch.roundnr "
 				+ "FROM	PlayerMatch theMatch INNER JOIN PlayerMatch AS hometeam ON thematch.van1 = hometeam.planning "
-				+ "INNER JOIN PlayerMatch AS awayteam ON thematch.van2 = awayteam.planning " + "WHERE thematch.draw = "
-				+ id + " AND hometeam.draw=" + id + " AND awayteam.draw=" + id + ";");
+				+ "INNER JOIN PlayerMatch AS awayteam ON thematch.van2 = awayteam.planning "
+				+ "INNER JOIN Draw ON draw.id = thematch.draw WHERE draw.id = " + id
+				+ " AND thematch.draw = hometeam.draw AND thematch.draw = awayteam.draw;");
 
 		try {
 			convertMatches(group, resultSet);
@@ -56,6 +58,11 @@ public class GetGroup extends AbstractTpFileControl {
 			match.setSet3(buildSet(rs, 7, 8));
 			match.setWalkoverTeam1(rs.getBoolean(9));
 			match.setWalkoverTeam2(rs.getBoolean(10));
+			match.setMatchnr(rs.getInt(13));
+			match.setRoundnr(rs.getInt(14));
+
+			group.setKo(rs.getInt(12) == KO_TYPE);
+			group.setName(rs.getString(11));
 
 			group.addMatch(match);
 		}
@@ -71,7 +78,7 @@ public class GetGroup extends AbstractTpFileControl {
 		return result;
 	}
 
-	public void fillTeams(Group group) {
+	private void fillTeams(Group group) {
 		ResultSet resultSet = executeSql("select distinct player1.name, player1.firstname, player1.memberid, "
 				+ "player2.name, player2.firstname, player2.memberid, Entry.id from "
 				+ "Draw INNER JOIN PlayerMatch ON Draw.id = PlayerMatch.draw, "

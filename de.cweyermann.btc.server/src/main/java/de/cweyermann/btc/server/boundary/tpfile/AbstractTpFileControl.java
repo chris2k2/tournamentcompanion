@@ -14,7 +14,7 @@ import java.sql.Statement;
  */
 public abstract class AbstractTpFileControl {
 
-	private Connection connection;
+	protected Connection connection;
 
 	public AbstractTpFileControl(Connection connection) {
 		this.connection = connection;

@@ -1,6 +1,7 @@
 package de.cweyermann.btc.server.control;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,7 +38,7 @@ public class CalculateGroupStandingsTest {
 		Team team1 = new Team();
 		Team team2 = new Team();
 		List<Match> matches = new ArrayList<Match>();
-		matches.add(new Match(team1, team2, "21-3", "21-2", null, false, false));
+		matches.add(new Match(team1, team2, "21-3", "21-2", null, false, false, 0, 0));
 
 		Group group = buildGroup(matches, team1, team2);
 
@@ -51,7 +52,7 @@ public class CalculateGroupStandingsTest {
 		assertEquals(42, first.getPointsFor());
 		assertEquals(5, first.getPointsAgainst());
 		assertEquals(1, first.getRanking());
-		
+
 		Standing second = standings.get(1);
 		assertEquals(team2, second.getTeam());
 		assertEquals(0, second.getMatchesFor());
@@ -68,7 +69,7 @@ public class CalculateGroupStandingsTest {
 		Team team1 = new Team();
 		Team team2 = new Team();
 		List<Match> matches = new ArrayList<Match>();
-		matches.add(new Match(team1, team2, "21-3", "21-23", "12-21", false, false));
+		matches.add(new Match(team1, team2, "21-3", "21-23", "12-21", false, false, 0, 0));
 
 		Group group = buildGroup(matches, team1, team2);
 
@@ -82,9 +83,9 @@ public class CalculateGroupStandingsTest {
 		Team team2 = new Team();
 		Team team3 = new Team();
 		List<Match> matches = new ArrayList<Match>();
-		matches.add(new Match(team1, team2, "21-3", "21-23", "12-21", false, false));
-		matches.add(new Match(team1, team3, "21-3", "21-23", "12-21", false, false));
-		matches.add(new Match(team2, team3, "21-3", "21-23", "12-21", false, false));
+		matches.add(new Match(team1, team2, "21-3", "21-23", "12-21", false, false, 0, 0));
+		matches.add(new Match(team1, team3, "21-3", "21-23", "12-21", false, false, 0, 0));
+		matches.add(new Match(team2, team3, "21-3", "21-23", "12-21", false, false, 0, 0));
 
 		Group group = buildGroup(matches, team1, team2, team3);
 
@@ -113,13 +114,13 @@ public class CalculateGroupStandingsTest {
 		Team team3 = new Team();
 		Team team4 = new Team();
 		List<Match> matches = new ArrayList<Match>();
-		matches.add(new Match(team1, team2, "21-23", "21-23", null, false, false));
-		matches.add(new Match(team1, team3, "21-3", "21-2", null, false, false));
-		matches.add(new Match(team1, team4, "21-1", "21-1", null, false, false));
-		matches.add(new Match(team2, team3, "21-3", "21-2", null, false, false));
-		matches.add(new Match(team2, team4, "21-23", "21-23", null, false, false));
-		matches.add(new Match(team3, team4, "21-3", "21-2", null, false, false));
-		
+		matches.add(new Match(team2, team1, "25-23", "25-23", null, false, false, 0, 0));
+		matches.add(new Match(team1, team3, "21-3", "21-2", null, false, false, 0, 0));
+		matches.add(new Match(team1, team4, "21-1", "21-1", null, false, false, 0, 0));
+		matches.add(new Match(team2, team3, "21-3", "21-2", null, false, false, 0, 0));
+		matches.add(new Match(team2, team4, "21-23", "21-23", null, false, false, 0, 0));
+		matches.add(new Match(team3, team4, "21-3", "21-2", null, false, false, 0, 0));
+
 		Group group = buildGroup(matches, team1, team2, team4, team3);
 
 		assertEquals(Arrays.asList(team2, team1, team3, team4), getTeamStandings(group));
@@ -133,12 +134,12 @@ public class CalculateGroupStandingsTest {
 		Team team4 = new Team();
 
 		List<Match> matches = new ArrayList<Match>();
-		matches.add(new Match(team1, team2, "21-0", "21-0", null, false, false));
-		matches.add(new Match(team1, team3, "21-23", "25-27", null, false, false));
-		matches.add(new Match(team1, team4, "21-1", "21-1", null, false, false));
-		matches.add(new Match(team2, team3, "21-3", "21-23", "21-5", false, false));
-		matches.add(new Match(team2, team4, "21-0", "21-0", null, false, false));
-		matches.add(new Match(team3, team4, "21-3", "21-2", null, false, false));
+		matches.add(new Match(team1, team2, "21-0", "21-0", null, false, false, 0, 0));
+		matches.add(new Match(team1, team3, "21-23", "25-27", null, false, false, 0, 0));
+		matches.add(new Match(team1, team4, "21-1", "21-1", null, false, false, 0, 0));
+		matches.add(new Match(team2, team3, "21-3", "21-23", "21-5", false, false, 0, 0));
+		matches.add(new Match(team2, team4, "21-0", "21-0", null, false, false, 0, 0));
+		matches.add(new Match(team3, team4, "21-3", "21-2", null, false, false, 0, 0));
 
 		Group group = buildGroup(matches, team1, team2, team3, team4);
 
@@ -151,7 +152,7 @@ public class CalculateGroupStandingsTest {
 		Team team2 = new Team();
 
 		List<Match> matches = new ArrayList<Match>();
-		matches.add(new Match(team1, team2, null, null, null, false, false));
+		matches.add(new Match(team1, team2, null, null, null, false, false, 0, 0));
 
 		Group group = buildGroup(matches, team1, team2);
 
@@ -168,12 +169,12 @@ public class CalculateGroupStandingsTest {
 		Team team3 = new Team();
 		Team team4 = new Team();
 		List<Match> matches = new ArrayList<Match>();
-		matches.add(new Match(team1, team2, "25-23", "25-23", null, false, false));
-		matches.add(new Match(team1, team3, "21-3", "21-2", null, false, false));
-		matches.add(new Match(team1, team4, "21-23", "21-23", null, false, false));
-		matches.add(new Match(team2, team3, "21-3", "21-2", null, false, false));
-		matches.add(new Match(team2, team4, "25-23", "25-23", null, false, false));
-		matches.add(new Match(team3, team4, "21-3", "21-2", null, false, false));
+		matches.add(new Match(team1, team2, "25-23", "25-23", null, false, false, 0, 0));
+		matches.add(new Match(team1, team3, "21-3", "21-2", null, false, false, 0, 0));
+		matches.add(new Match(team1, team4, "21-23", "21-23", null, false, false, 0, 0));
+		matches.add(new Match(team2, team3, "21-3", "21-2", null, false, false, 0, 0));
+		matches.add(new Match(team2, team4, "25-23", "25-23", null, false, false, 0, 0));
+		matches.add(new Match(team3, team4, "21-3", "21-2", null, false, false, 0, 0));
 
 		Group group = buildGroup(matches, team1, team2, team3, team4);
 
@@ -187,12 +188,12 @@ public class CalculateGroupStandingsTest {
 		Team team3 = new Team();
 		Team team4 = new Team();
 		List<Match> matches = new ArrayList<Match>();
-		matches.add(new Match(team1, team2, "0-21", "0-21", null, false, false));
-		matches.add(new Match(team1, team3, "21-0", "21-0", null, false, false));
-		matches.add(new Match(team1, team4, "21-0", "0-21", "21-0", false, false));
-		matches.add(new Match(team2, team3, "0-21", "0-21", null, false, false));
-		matches.add(new Match(team2, team4, "21-0", "0-21", "21-0", false, false));
-		matches.add(new Match(team3, team4, "21-0", "21-0", null, false, false));
+		matches.add(new Match(team1, team2, "0-21", "0-21", null, false, false, 0, 0));
+		matches.add(new Match(team1, team3, "21-0", "21-0", null, false, false, 0, 0));
+		matches.add(new Match(team1, team4, "21-0", "0-21", "21-0", false, false, 0, 0));
+		matches.add(new Match(team2, team3, "0-21", "0-21", null, false, false, 0, 0));
+		matches.add(new Match(team2, team4, "21-0", "0-21", "21-0", false, false, 0, 0));
+		matches.add(new Match(team3, team4, "21-0", "21-0", null, false, false, 0, 0));
 
 		Group group = buildGroup(matches, team1, team2, team3, team4);
 
@@ -206,9 +207,9 @@ public class CalculateGroupStandingsTest {
 		Team team3 = new Team();
 		Team team4 = new Team();
 		List<Match> matches = new ArrayList<Match>();
-		matches.add(new Match(team1, team4, "21-0", "21-0", null, false, false));
-		matches.add(new Match(team2, team4, "21-0", "21-19", null, false, false));
-		matches.add(new Match(team3, team4, "21-0", "21-5", null, false, false));
+		matches.add(new Match(team1, team4, "21-0", "21-0", null, false, false, 0, 0));
+		matches.add(new Match(team2, team4, "21-0", "21-19", null, false, false, 0, 0));
+		matches.add(new Match(team3, team4, "21-0", "21-5", null, false, false, 0, 0));
 
 		Group group = buildGroup(matches, team1, team2, team3, team4);
 
@@ -222,8 +223,8 @@ public class CalculateGroupStandingsTest {
 		Team team3 = new Team();
 
 		List<Match> matches = new ArrayList<Match>();
-		matches.add(new Match(team1, team3, "21-0", "12-21", "21-5", false, false));
-		matches.add(new Match(team2, team3, "21-0", "21-0", null, false, false));
+		matches.add(new Match(team1, team3, "21-0", "12-21", "21-5", false, false, 0, 0));
+		matches.add(new Match(team2, team3, "21-0", "21-0", null, false, false, 0, 0));
 
 		Group group = buildGroup(matches, team1, team2, team3);
 
@@ -237,8 +238,8 @@ public class CalculateGroupStandingsTest {
 		Team team3 = new Team();
 
 		List<Match> matches = new ArrayList<Match>();
-		matches.add(new Match(team1, team3, "21-23", "27-25", "0-21", false, false));
-		matches.add(new Match(team1, team2, "21-23", "21-23", null, false, false));
+		matches.add(new Match(team1, team3, "21-23", "27-25", "0-21", false, false, 0, 0));
+		matches.add(new Match(team1, team2, "21-23", "21-23", null, false, false, 0, 0));
 
 		Group group = buildGroup(matches, team1, team2, team3);
 
@@ -252,25 +253,40 @@ public class CalculateGroupStandingsTest {
 		Team team3 = new Team();
 
 		List<Match> matches = new ArrayList<Match>();
-		matches.add(new Match(team1, team3, "21-23", "0-21", null, false, false));
-		matches.add(new Match(team1, team2, "21-23", "21-23", null, false, false));
+		matches.add(new Match(team1, team3, "21-23", "0-21", null, false, false, 0, 0));
+		matches.add(new Match(team1, team2, "21-23", "21-23", null, false, false, 0, 0));
 
 		Group group = buildGroup(matches, team1, team2, team3);
 
 		assertEquals(Arrays.asList(team3, team2, team1), getTeamStandings(group));
 	}
-	
+
 	@Test
-	public void multiwayTieSettledByPoints()
-	{
+	public void kophase_doesNothing() {
+		Team team1 = new Team();
+		Team team2 = new Team();
+
+		Group g = new Group();
+		g.addTeam(team1);
+		g.addTeam(team2);
+		g.addMatch(new Match(team1, team2, "0-21", "0-21", null, false, false, 0, 0));
+		g.setKo(true);
+		
+		calc.add(g);
+		
+		assertTrue(g.getStandings().isEmpty());
+	}
+
+	@Test
+	public void multiwayTieSettledByPoints() {
 		Team team1 = new Team();
 		Team team2 = new Team();
 		Team team3 = new Team();
 
 		List<Match> matches = new ArrayList<Match>();
-		matches.add(new Match(team1, team3, "21-0", "21-19", null, false, false));
-		matches.add(new Match(team1, team2, "0-21", "0-21", null, false, false));
-		matches.add(new Match(team2, team3, "0-21", "0-21", null, false, false));
+		matches.add(new Match(team1, team3, "21-0", "21-19", null, false, false, 0, 0));
+		matches.add(new Match(team1, team2, "0-21", "0-21", null, false, false, 0, 0));
+		matches.add(new Match(team2, team3, "0-21", "0-21", null, false, false, 0, 0));
 
 		Group group = buildGroup(matches, team1, team2, team3);
 
@@ -280,12 +296,12 @@ public class CalculateGroupStandingsTest {
 
 	private List<Match> buildDoubleDraw(Team team1, Team team2, Team team3, Team team4) {
 		List<Match> matches = new ArrayList<Match>();
-		matches.add(new Match(team1, team2, "21-23", "21-23", null, false, false));
-		matches.add(new Match(team1, team3, "21-3", "21-2", null, false, false));
-		matches.add(new Match(team1, team4, "21-1", "21-1", null, false, false));
-		matches.add(new Match(team2, team3, "21-3", "21-2", null, false, false));
-		matches.add(new Match(team2, team4, "21-23", "21-23", null, false, false));
-		matches.add(new Match(team3, team4, "21-3", "21-2", null, false, false));
+		matches.add(new Match(team1, team2, "21-23", "21-23", null, false, false, 0, 0));
+		matches.add(new Match(team1, team3, "21-3", "21-2", null, false, false, 0, 0));
+		matches.add(new Match(team1, team4, "21-1", "21-1", null, false, false, 0, 0));
+		matches.add(new Match(team2, team3, "21-3", "21-2", null, false, false, 0, 0));
+		matches.add(new Match(team2, team4, "21-23", "21-23", null, false, false, 0, 0));
+		matches.add(new Match(team3, team4, "21-3", "21-2", null, false, false, 0, 0));
 		return matches;
 	}
 

@@ -19,4 +19,28 @@ public class GroupTest {
 		assertEquals(1, standings.get(0).getRanking());
 		assertEquals(2, standings.get(1).getRanking());
 	}
+	
+	@Test
+	public void duplicateStandings_comesAstwo()
+	{
+		Group group = new Group();
+		group.addStanding(new Standing(null, 1, 0, 0, 0, 0, 0, 0));
+		group.addStanding(new Standing(null, 2, 0, 0, 0, 0, 0, 0));
+		
+		List<Standing> standings = group.getStandings();
+		assertEquals(1, standings.get(0).getMatchesFor());
+		assertEquals(2, standings.get(1).getMatchesFor());
+		
+	}
+	
+	@Test
+	public void matchesAdded_sorted() {
+		Group group = new Group();
+		group.addMatch(new Match(null, null, null, null, null, false, false, 1, 0));
+		group.addMatch(new Match(null, null, null, null, null, false, false, 0, 0));
+		
+		List<Match> matches = group.getMatches();
+		assertEquals(0, matches.get(0).getMatchnr());
+		assertEquals(1, matches.get(1).getMatchnr());
+	}
 }
