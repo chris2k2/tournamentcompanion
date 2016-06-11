@@ -1,6 +1,7 @@
 package de.cweyermann.btc.server.boundary.tpfile;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.SQLException;
@@ -9,6 +10,7 @@ import org.junit.Test;
 
 import de.cweyermann.btc.server.entity.Group;
 import de.cweyermann.btc.server.entity.Match;
+import de.cweyermann.btc.server.entity.Player;
 
 public class GetGroupTest {
 
@@ -21,6 +23,7 @@ public class GetGroupTest {
 		assertEquals(2, group.getTeams().size());
 		assertEquals("Nachname1", group.getTeams().get(0).getPlayer1().getSurname());
 		assertEquals("Vorname1", group.getTeams().get(0).getPlayer1().getFirstName());
+		assertNull(group.getTeams().get(0).getPlayer1().getClub());
 		assertEquals("1234", group.getTeams().get(0).getPlayer1().getTournamentId());
 		assertEquals("Nachname2", group.getTeams().get(1).getPlayer1().getSurname());
 		assertEquals("Vorname2", group.getTeams().get(1).getPlayer1().getFirstName());
@@ -43,8 +46,12 @@ public class GetGroupTest {
 		Group group = uut.get(1);
 
 		assertEquals(5, group.getTeams().size());
-		assertEquals("Bakker", group.getTeams().get(0).getPlayer1().getSurname());
-		assertEquals("Velden", group.getTeams().get(0).getPlayer2().getSurname());
+		Player player1 = group.getTeams().get(0).getPlayer1();
+		Player player2 = group.getTeams().get(0).getPlayer2();
+		assertEquals("Bakker", player1.getSurname());
+		assertEquals("Bakkum", player1.getClub());
+		assertEquals("Velden", player2.getSurname());
+		assertEquals("Bakkum", player2.getClub());
 	}
 
 	@Test
