@@ -35,8 +35,9 @@ public class GetGroup extends AbstractTpFileControl {
 		ResultSet resultSet = executeSql("SELECT hometeam.entry, awayteam.entry, "
 				+ "thematch.team1set1, thematch.team2set1, thematch.team1set2, "
 				+ "thematch.team2set2, thematch.team1set3, thematch.team2set3, "
-				+ "hometeam.walkover, awayteam.walkover, Draw.name, Draw.DrawType, thematch.matchnr, thematch.roundnr "
-				+ "FROM	PlayerMatch theMatch INNER JOIN PlayerMatch AS hometeam ON thematch.van1 = hometeam.planning "
+				+ "hometeam.walkover, awayteam.walkover, Draw.name, Draw.DrawType, thematch.matchnr, thematch.roundnr, "
+				+ "draw.position, draw.qualification "
+				+ "FROM	PlayerMatch thematch INNER JOIN PlayerMatch AS hometeam ON thematch.van1 = hometeam.planning "
 				+ "INNER JOIN PlayerMatch AS awayteam ON thematch.van2 = awayteam.planning "
 				+ "INNER JOIN Draw ON draw.id = thematch.draw WHERE draw.id = " + id
 				+ " AND thematch.draw = hometeam.draw AND thematch.draw = awayteam.draw;");
@@ -62,6 +63,8 @@ public class GetGroup extends AbstractTpFileControl {
 			match.setRoundnr(rs.getInt(14));
 
 			group.setKo(rs.getInt(12) == KO_TYPE);
+			group.setPosition(rs.getInt(15));
+			group.setQualification(rs.getBoolean(16));
 			group.setName(rs.getString(11));
 
 			group.addMatch(match);
@@ -103,7 +106,7 @@ public class GetGroup extends AbstractTpFileControl {
 
 			Player player1 = new Player(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3));
 			player1.setClub(resultSet.getString(8));
-			
+
 			Player player2 = null;
 			String name2 = resultSet.getString(4);
 			if (name2 != null) {

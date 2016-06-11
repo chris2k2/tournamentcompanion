@@ -43,4 +43,24 @@ public class GroupTest {
 		assertEquals(0, matches.get(0).getMatchnr());
 		assertEquals(1, matches.get(1).getMatchnr());
 	}
+
+	@Test
+	public void qualification_posMinus1()
+	{
+		Group group = new Group();
+		group.setQualification(true);
+		group.setPosition(1);
+	
+		assertEquals(-1, group.getBestPossiblePosition());
+	}
+	
+	@Test
+	public void notQualification_posKept()
+	{
+		Group group = new Group();
+		group.setQualification(false);
+		group.setPosition(3);
+	
+		assertEquals(3, group.getBestPossiblePosition());
+	}
 }

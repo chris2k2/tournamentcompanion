@@ -7,14 +7,18 @@ import java.util.List;
 public class Group extends AbstractEntryWithId {
 
 	private String name;
-	
+
 	private boolean ko;
-	
+
 	private List<Standing> standings = new ArrayList<>();
 
 	private List<Match> matches = new ArrayList<>();
 
 	private List<Team> teams = new ArrayList<>();
+
+	private int position;
+
+	private boolean qualification;
 
 	public String getName() {
 		return name;
@@ -58,5 +62,23 @@ public class Group extends AbstractEntryWithId {
 
 	public void setKo(boolean ko) {
 		this.ko = ko;
+	}
+
+	public int getBestPossiblePosition() {
+		int pos = position;
+		
+		if (qualification) {
+			pos = -1;
+		}
+		
+		return pos;
+	}
+
+	public void setPosition(int pos) {
+		this.position = pos;
+	}
+
+	public void setQualification(boolean isQuali) {
+		this.qualification = isQuali;
 	}
 }

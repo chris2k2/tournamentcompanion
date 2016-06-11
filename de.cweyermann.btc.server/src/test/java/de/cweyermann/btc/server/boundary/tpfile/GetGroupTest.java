@@ -16,7 +16,7 @@ public class GetGroupTest {
 
 	@Test
 	public void minimal_twoTeams() throws SQLException {
-		GetGroup uut = new GetGroup(TestUtils.getConnection("minimum.TP"));
+		GetGroup uut = new GetGroup(TpFileUtils.getConnection("minimum.TP"));
 
 		Group group = uut.get(1);
 
@@ -36,12 +36,12 @@ public class GetGroupTest {
 		assertEquals("4-21", match.getSet2());
 		assertEquals(false, match.isWalkoverTeam1());
 		assertEquals(false, match.isWalkoverTeam2());
+		assertEquals(1, group.getBestPossiblePosition());
 	}
-	
+
 	@Test
-	public void demo_worksOnDoubles()
-	{
-		GetGroup uut = new GetGroup(TestUtils.getConnection("demo.tp"));
+	public void demo_worksOnDoubles() {
+		GetGroup uut = new GetGroup(TpFileUtils.getConnection("demo.tp"));
 
 		Group group = uut.get(1);
 
@@ -55,9 +55,8 @@ public class GetGroupTest {
 	}
 
 	@Test
-	public void differentDraws_distinguishes()
-	{
-		GetGroup uut = new GetGroup(TestUtils.getConnection("ko.tp"));
+	public void differentDraws_distinguishes() {
+		GetGroup uut = new GetGroup(TpFileUtils.getConnection("ko.tp"));
 
 		Group group = uut.get(10);
 
@@ -66,5 +65,18 @@ public class GetGroupTest {
 		assertEquals(3, group.getMatches().size());
 	}
 
-	
+	@Test
+	public void moreDraws_qualifcationIsTakenIntoAccount() {
+		GetGroup uut = new GetGroup(TpFileUtils.getConnection("bigdemo.tp"));
+
+		Group groupA = uut.get(1);
+		Group groupD = uut.get(4);
+		Group groupKo1 = uut.get(5);
+		Group groupKo9 = uut.get(6);
+
+		assertEquals(-1, groupA.getBestPossiblePosition());
+		assertEquals(-1, groupD.getBestPossiblePosition());
+		assertEquals(1, groupKo1.getBestPossiblePosition());
+		assertEquals(9, groupKo9.getBestPossiblePosition());
+	}
 }

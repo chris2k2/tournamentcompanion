@@ -14,7 +14,7 @@ public class GetGroupsTest {
 	@Test
 	public void demo_givesElimination() throws SQLException
 	{
-		GetGroups getGroups = new GetGroups(TestUtils.getConnection("demo.tp"));
+		GetGroups getGroups = new GetGroups(TpFileUtils.getConnection("demo.tp"));
 		
 		Groups groups = getGroups.withParent(1);
 		
