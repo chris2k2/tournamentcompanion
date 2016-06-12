@@ -6,6 +6,10 @@ import java.util.List;
 
 public class Group extends AbstractEntryWithId {
 
+	public enum GroupType {
+		QUALIFICATION, FINALGROUP, KO, LOOSERSKO
+	}
+
 	private String name;
 
 	private boolean ko;
@@ -64,14 +68,17 @@ public class Group extends AbstractEntryWithId {
 		this.ko = ko;
 	}
 
-	public int getBestPossiblePosition() {
-		int pos = position;
-		
-		if (qualification) {
-			pos = -1;
+	public GroupType getType() {
+		GroupType type = GroupType.QUALIFICATION;
+		if (ko && position == 1) {
+			type = GroupType.KO;
+		} else if (ko) {
+			type = GroupType.LOOSERSKO;
+		} else if (!qualification) {
+			type = GroupType.FINALGROUP;
 		}
-		
-		return pos;
+
+		return type;
 	}
 
 	public void setPosition(int pos) {

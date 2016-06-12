@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import org.junit.Test;
 
 import de.cweyermann.btc.server.entity.Group;
+import de.cweyermann.btc.server.entity.Group.GroupType;
 import de.cweyermann.btc.server.entity.Match;
 import de.cweyermann.btc.server.entity.Player;
 
@@ -36,7 +37,7 @@ public class GetGroupTest {
 		assertEquals("4-21", match.getSet2());
 		assertEquals(false, match.isWalkoverTeam1());
 		assertEquals(false, match.isWalkoverTeam2());
-		assertEquals(1, group.getBestPossiblePosition());
+		assertEquals(GroupType.KO, group.getType());
 	}
 
 	@Test
@@ -74,9 +75,18 @@ public class GetGroupTest {
 		Group groupKo1 = uut.get(5);
 		Group groupKo9 = uut.get(6);
 
-		assertEquals(-1, groupA.getBestPossiblePosition());
-		assertEquals(-1, groupD.getBestPossiblePosition());
-		assertEquals(1, groupKo1.getBestPossiblePosition());
-		assertEquals(9, groupKo9.getBestPossiblePosition());
+		assertEquals(GroupType.QUALIFICATION, groupA.getType());
+		assertEquals(GroupType.QUALIFICATION, groupD.getType());
+		assertEquals(GroupType.KO, groupKo1.getType());
+		assertEquals(GroupType.LOOSERSKO, groupKo9.getType());
+	}
+
+	@Test
+	public void bigDemo_groupPhaseAvoidsReverseHomeAwayTrap() {
+		GetGroup uut = new GetGroup(TpFileUtils.getConnection("bigdemo.tp"));
+
+		Group groupA = uut.get(1);
+
+		assertEquals(6, groupA.getMatches().size());
 	}
 }

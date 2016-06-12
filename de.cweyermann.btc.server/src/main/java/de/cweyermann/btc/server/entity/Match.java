@@ -224,6 +224,6 @@ public class Match extends AbstractEntity {
 	
 	@Override
 	public String toString() {
-		return team1.getId() + " vs. " + team2.getId() + " " + set1 + " " + set2 + " " + set3;
+		return team1 + " vs. " + team2 + " " + set1 + " " + set2 + " " + set3;
 	}
 }
