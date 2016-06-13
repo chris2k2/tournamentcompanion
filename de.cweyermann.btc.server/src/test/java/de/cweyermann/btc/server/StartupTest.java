@@ -49,7 +49,9 @@ public class StartupTest {
 	public void checkPaths_Works(TestContext context) throws InterruptedException {
 		start(context, "demo.tp", true);
 
-		assertOk("/btc/disciplines/mxb/groups/a");
+		assertOk("/btc/disciplines/1");
+		assertOk("/btc/disciplines/");
+		assertOk("/btc/groups/1");
 
 		assertNotFound("/btASDF");
 		assertNotFound("/btc/disciplines/HDA/funny");

@@ -7,7 +7,7 @@ import java.util.List;
 public class Group extends AbstractEntryWithId {
 
 	public enum GroupType {
-		QUALIFICATION, FINALGROUP, KO, LOOSERSKO
+		QUALIFICATION, FINALGROUP, KO, LOOSERSKO;
 	}
 
 	private String name;
