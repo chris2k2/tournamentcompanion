@@ -22,7 +22,7 @@ public class Match extends AbstractEntity {
 	private boolean walkoverTeam2;
 
 	private int matchnr;
-	
+
 	private int roundnr;
 
 	public Match() {
@@ -47,7 +47,6 @@ public class Match extends AbstractEntity {
 		return didTeamWin(team1, set);
 	}
 
-
 	private boolean didTeamWin(Team team, String set) {
 		boolean won = false;
 
@@ -65,19 +64,21 @@ public class Match extends AbstractEntity {
 			won = true;
 		}
 
-		if (team2.equals(team)) {
+		if (team != null && team.equals(team2)) {
 			won = !won;
 		}
 
 		return won;
 	}
-	
+
 	public Team getLooser() {
 		Team winner = getWinner();
-		Team looser = team2;
+		Team looser = null;
 
-		if (winner.equals(team2)) {
+		if (winner != null && winner.equals(team2)) {
 			looser = team1;
+		} else if (winner != null) {
+			looser = team2;
 		}
 
 		return looser;
@@ -92,7 +93,7 @@ public class Match extends AbstractEntity {
 		counter += getPoints(team, set1);
 		counter += getPoints(team, set2);
 		counter += getPoints(team, set3);
-		
+
 		return counter;
 	}
 
@@ -105,13 +106,13 @@ public class Match extends AbstractEntity {
 			int p1points = Integer.parseInt(matcher.group(1));
 			int p2points = Integer.parseInt(matcher.group(2));
 
-			if (team1.equals(team)) {
+			if (team1 != null && team1.equals(team)) {
 				result = p1points;
 			} else {
 				result = p2points;
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -221,9 +222,8 @@ public class Match extends AbstractEntity {
 		this.walkoverTeam2 = walkoverTeam2;
 	}
 
-	
 	@Override
 	public String toString() {
-		return team1.getId() + " vs. " + team2.getId() + " " + set1 + " " + set2 + " " + set3;
+		return team1 + " vs. " + team2 + " " + set1 + " " + set2 + " " + set3;
 	}
 }

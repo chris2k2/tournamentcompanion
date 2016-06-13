@@ -4,8 +4,14 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
-public final class TestUtils {
+import de.cweyermann.btc.server.control.CalculateGroupStandings;
+import de.cweyermann.btc.server.entity.Group;
+import de.cweyermann.btc.server.entity.Match;
+import de.cweyermann.btc.server.entity.Team;
+
+public final class TpFileUtils {
 
 	public static Connection getConnection(String name) {
 		String filePath = getPath(name);
@@ -26,4 +32,5 @@ public final class TestUtils {
 	public static String getPath(String name) {
 		return "src/test/resources/msaccess/examples/" + name;
 	}
+	
 }

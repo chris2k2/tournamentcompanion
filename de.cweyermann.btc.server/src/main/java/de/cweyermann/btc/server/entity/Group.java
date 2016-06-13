@@ -6,15 +6,23 @@ import java.util.List;
 
 public class Group extends AbstractEntryWithId {
 
+	public enum GroupType {
+		QUALIFICATION, FINALGROUP, KO, LOOSERSKO;
+	}
+
 	private String name;
-	
+
 	private boolean ko;
-	
+
 	private List<Standing> standings = new ArrayList<>();
 
 	private List<Match> matches = new ArrayList<>();
 
 	private List<Team> teams = new ArrayList<>();
+
+	private int position;
+
+	private boolean qualification;
 
 	public String getName() {
 		return name;
@@ -58,5 +66,26 @@ public class Group extends AbstractEntryWithId {
 
 	public void setKo(boolean ko) {
 		this.ko = ko;
+	}
+
+	public GroupType getType() {
+		GroupType type = GroupType.QUALIFICATION;
+		if (ko && position == 1) {
+			type = GroupType.KO;
+		} else if (ko) {
+			type = GroupType.LOOSERSKO;
+		} else if (!qualification) {
+			type = GroupType.FINALGROUP;
+		}
+
+		return type;
+	}
+
+	public void setPosition(int pos) {
+		this.position = pos;
+	}
+
+	public void setQualification(boolean isQuali) {
+		this.qualification = isQuali;
 	}
 }

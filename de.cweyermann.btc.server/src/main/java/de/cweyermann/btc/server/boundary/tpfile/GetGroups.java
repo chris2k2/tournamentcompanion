@@ -17,4 +17,9 @@ public class GetGroups extends AbstractGetChilds<Groups> {
 		return convert(result, new Groups());
 	}
 
+	public Groups all() {
+		ResultSet result = executeSql("select id, name from Draw;");
+
+		return convert(result, new Groups());
+	}
 }

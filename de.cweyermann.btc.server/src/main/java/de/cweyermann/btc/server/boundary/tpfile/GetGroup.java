@@ -35,11 +35,13 @@ public class GetGroup extends AbstractTpFileControl {
 		ResultSet resultSet = executeSql("SELECT hometeam.entry, awayteam.entry, "
 				+ "thematch.team1set1, thematch.team2set1, thematch.team1set2, "
 				+ "thematch.team2set2, thematch.team1set3, thematch.team2set3, "
-				+ "hometeam.walkover, awayteam.walkover, Draw.name, Draw.DrawType, thematch.matchnr, thematch.roundnr "
-				+ "FROM	PlayerMatch theMatch INNER JOIN PlayerMatch AS hometeam ON thematch.van1 = hometeam.planning "
+				+ "hometeam.walkover, awayteam.walkover, Draw.name, Draw.DrawType, thematch.matchnr, thematch.roundnr, "
+				+ "draw.position, draw.qualification "
+				+ "FROM	PlayerMatch thematch INNER JOIN PlayerMatch AS hometeam ON thematch.van1 = hometeam.planning "
 				+ "INNER JOIN PlayerMatch AS awayteam ON thematch.van2 = awayteam.planning "
-				+ "INNER JOIN Draw ON draw.id = thematch.draw WHERE draw.id = " + id
-				+ " AND thematch.draw = hometeam.draw AND thematch.draw = awayteam.draw;");
+				+ "INNER JOIN Draw ON draw.id = thematch.draw WHERE draw.id = " + id + " "
+				+ "AND thematch.draw = hometeam.draw AND thematch.draw = awayteam.draw "
+				+ "AND reversehomeaway=FALSE;");
 
 		try {
 			convertMatches(group, resultSet);
@@ -62,6 +64,8 @@ public class GetGroup extends AbstractTpFileControl {
 			match.setRoundnr(rs.getInt(14));
 
 			group.setKo(rs.getInt(12) == KO_TYPE);
+			group.setPosition(rs.getInt(15));
+			group.setQualification(rs.getBoolean(16));
 			group.setName(rs.getString(11));
 
 			group.addMatch(match);
@@ -79,14 +83,14 @@ public class GetGroup extends AbstractTpFileControl {
 	}
 
 	private void fillTeams(Group group) {
-		ResultSet resultSet = executeSql("select distinct player1.name, player1.firstname, player1.memberid, "
-				+ "player2.name, player2.firstname, player2.memberid, Entry.id from "
-				+ "Draw INNER JOIN PlayerMatch ON Draw.id = PlayerMatch.draw, "
-				+ "PlayerMatch INNER JOIN Entry ON PlayerMatch.entry = Entry.id, "
-				+ "Entry INNER JOIN Player as player1 ON Entry.player1 = player1.id, "
-				+ "Entry LEFT JOIN Player as player2 ON Entry.player2 = player2.id " + "WHERE draw.id = "
-				+ group.getId() + "; ");
-
+		ResultSet resultSet = executeSql("SELECT DISTINCT player1.name, player1.firstname, player1.memberid, "
+				+ "player2.name, player2.firstname, player2.memberid, entry.id, club1.name, club2.name "
+				+ "FROM Draw INNER JOIN PlayerMatch ON Draw.id = PlayerMatch.draw "
+				+ "INNER JOIN Entry ON PlayerMatch.entry = Entry.id "
+				+ "INNER JOIN Player AS player1 ON Entry.player1 = player1.id "
+				+ "LEFT JOIN Player AS player2 ON Entry.player2 = player2.id "
+				+ "LEFT JOIN Club AS club1 ON club1.id = player1.club "
+				+ "LEFT JOIN Club AS club2 ON club2.id = player2.club " + "WHERE draw.id=" + group.getId() + " ;");
 		try {
 			convertTeams(group, resultSet);
 		} catch (SQLException e) {
@@ -102,11 +106,13 @@ public class GetGroup extends AbstractTpFileControl {
 			teamById.put(teamid, currentTeam);
 
 			Player player1 = new Player(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3));
+			player1.setClub(resultSet.getString(8));
 
 			Player player2 = null;
 			String name2 = resultSet.getString(4);
 			if (name2 != null) {
 				player2 = new Player(name2, resultSet.getString(5), resultSet.getString(6));
+				player2.setClub(resultSet.getString(9));
 			}
 
 			currentTeam.setPlayer1(player1);

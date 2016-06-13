@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 
 import com.jayway.restassured.RestAssured;
 
-import de.cweyermann.btc.server.boundary.tpfile.TestUtils;
+import de.cweyermann.btc.server.boundary.tpfile.TpFileUtils;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
@@ -49,7 +49,9 @@ public class StartupTest {
 	public void checkPaths_Works(TestContext context) throws InterruptedException {
 		start(context, "demo.tp", true);
 
-		assertOk("/btc/disciplines/mxb/groups/a");
+		assertOk("/btc/disciplines/1");
+		assertOk("/btc/disciplines/");
+		assertOk("/btc/groups/1");
 
 		assertNotFound("/btASDF");
 		assertNotFound("/btc/disciplines/HDA/funny");
@@ -59,7 +61,7 @@ public class StartupTest {
 		Async async = context.async();
 
 		DeploymentOptions options = new DeploymentOptions()
-				.setConfig(new JsonObject().put("httpserver.port", 8080).put("tpfile.path", TestUtils.getPath(name)));
+				.setConfig(new JsonObject().put("httpserver.port", 8080).put("tpfile.path", TpFileUtils.getPath(name)));
 		vertx.deployVerticle(Startup.class.getName(), options, ar -> {
 			context.assertEquals(starts, ar.succeeded());
 			async.complete();

@@ -7,7 +7,7 @@ public class AbstractTpFileControlTest {
 	private class SpecificMsAccessControl extends AbstractTpFileControl {
 
 		public SpecificMsAccessControl(String filePath) {
-			super(TestUtils.getConnection(filePath));
+			super(TpFileUtils.getConnection(filePath));
 		}
 
 		public void fails() {
