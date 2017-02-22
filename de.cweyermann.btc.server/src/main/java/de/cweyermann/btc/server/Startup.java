@@ -11,7 +11,9 @@ import de.cweyermann.btc.server.boundary.rest.ShowGroup;
 import de.cweyermann.btc.server.boundary.rest.ShowGroupOverview;
 import de.cweyermann.btc.server.boundary.tpfile.GetDisciplines;
 import de.cweyermann.btc.server.boundary.tpfile.GetGroup;
+import de.cweyermann.btc.server.boundary.tpfile.GetGroups;
 import de.cweyermann.btc.server.boundary.tpfile.TpFileConnectionInvalid;
+import de.cweyermann.btc.server.control.CalculateClubStandings;
 import de.cweyermann.btc.server.control.CalculateGroupStandings;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
@@ -56,8 +58,8 @@ public class Startup extends AbstractVerticle {
 
 		router.route("/btc/clubs/").handler(showClubs);
 		router.route("/btc/disciplines/").handler(showDisciplines);
-		router.route("/btc/disciplines/:disciplines/groups/").handler(showgroupOverview);
-		router.route("/btc/disciplines/:disciplines/groups/:group").handler(showGroup);
+		router.route("/btc/disciplines/:disciplines").handler(showgroupOverview);
+		router.route("/btc/groups/:group").handler(showGroup);
 
 		server.requestHandler(router::accept).listen(port, x -> startFuture.complete());
 	}
@@ -65,11 +67,13 @@ public class Startup extends AbstractVerticle {
 	private void init(Connection dbConnection) {
 		GetDisciplines getDisciplines = new GetDisciplines(dbConnection);
 		GetGroup getGroup = new GetGroup(dbConnection);
+		GetGroups getGroups = new GetGroups(dbConnection);
 		CalculateGroupStandings calculate = new CalculateGroupStandings();
+		CalculateClubStandings calculateClub = new CalculateClubStandings(10, 6, 4, 2, 1);
 
 		showDisciplines = new ShowDisciplines(getDisciplines);
-		showgroupOverview = new ShowGroupOverview(calculate, getGroup);
-		showClubs = new ShowClubs();
-		showGroup = new ShowGroup();
+		showgroupOverview = new ShowGroupOverview(calculate, getGroup, getGroups);
+		showClubs = new ShowClubs(calculateClub, getGroups, getGroup);
+		showGroup = new ShowGroup(getGroup, calculate);
 	}
 }

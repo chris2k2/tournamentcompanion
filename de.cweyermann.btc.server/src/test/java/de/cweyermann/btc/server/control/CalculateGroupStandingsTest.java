@@ -40,7 +40,7 @@ public class CalculateGroupStandingsTest {
 		List<Match> matches = new ArrayList<Match>();
 		matches.add(new Match(team1, team2, "21-3", "21-2", null, false, false, 0, 0));
 
-		Group group = buildGroup(matches, team1, team2);
+		Group group = BuilderUtils.buildGroup(matches, team1, team2);
 
 		List<Standing> standings = group.getStandings();
 		Standing first = standings.get(0);
@@ -71,7 +71,7 @@ public class CalculateGroupStandingsTest {
 		List<Match> matches = new ArrayList<Match>();
 		matches.add(new Match(team1, team2, "21-3", "21-23", "12-21", false, false, 0, 0));
 
-		Group group = buildGroup(matches, team1, team2);
+		Group group = BuilderUtils.buildGroup(matches, team1, team2);
 
 		assertEquals(team2, group.getStandings().get(0).getTeam());
 		assertEquals(team1, group.getStandings().get(1).getTeam());
@@ -87,7 +87,7 @@ public class CalculateGroupStandingsTest {
 		matches.add(new Match(team1, team3, "21-3", "21-23", "12-21", false, false, 0, 0));
 		matches.add(new Match(team2, team3, "21-3", "21-23", "12-21", false, false, 0, 0));
 
-		Group group = buildGroup(matches, team1, team2, team3);
+		Group group = BuilderUtils.buildGroup(matches, team1, team2, team3);
 
 		assertEquals(team3, group.getStandings().get(0).getTeam());
 		assertEquals(team2, group.getStandings().get(1).getTeam());
@@ -102,7 +102,7 @@ public class CalculateGroupStandingsTest {
 		Team team4 = new Team();
 		List<Match> matches = buildDoubleDraw(team1, team2, team3, team4);
 
-		Group group = buildGroup(matches, team1, team2, team3, team4);
+		Group group = BuilderUtils.buildGroup(matches, team1, team2, team3, team4);
 
 		assertEquals(Arrays.asList(team2, team1, team3, team4), getTeamStandings(group));
 	}
@@ -121,7 +121,7 @@ public class CalculateGroupStandingsTest {
 		matches.add(new Match(team2, team4, "21-23", "21-23", null, false, false, 0, 0));
 		matches.add(new Match(team3, team4, "21-3", "21-2", null, false, false, 0, 0));
 
-		Group group = buildGroup(matches, team1, team2, team4, team3);
+		Group group = BuilderUtils.buildGroup(matches, team1, team2, team4, team3);
 
 		assertEquals(Arrays.asList(team2, team1, team3, team4), getTeamStandings(group));
 	}
@@ -141,7 +141,7 @@ public class CalculateGroupStandingsTest {
 		matches.add(new Match(team2, team4, "21-0", "21-0", null, false, false, 0, 0));
 		matches.add(new Match(team3, team4, "21-3", "21-2", null, false, false, 0, 0));
 
-		Group group = buildGroup(matches, team1, team2, team3, team4);
+		Group group = BuilderUtils.buildGroup(matches, team1, team2, team3, team4);
 
 		assertEquals(Arrays.asList(team3, team1, team2, team4), getTeamStandings(group));
 	}
@@ -154,7 +154,7 @@ public class CalculateGroupStandingsTest {
 		List<Match> matches = new ArrayList<Match>();
 		matches.add(new Match(team1, team2, null, null, null, false, false, 0, 0));
 
-		Group group = buildGroup(matches, team1, team2);
+		Group group = BuilderUtils.buildGroup(matches, team1, team2);
 
 		assertEquals(0, group.getStandings().get(0).getMatchesFor());
 		assertEquals(0, group.getStandings().get(1).getMatchesFor());
@@ -176,7 +176,7 @@ public class CalculateGroupStandingsTest {
 		matches.add(new Match(team2, team4, "25-23", "25-23", null, false, false, 0, 0));
 		matches.add(new Match(team3, team4, "21-3", "21-2", null, false, false, 0, 0));
 
-		Group group = buildGroup(matches, team1, team2, team3, team4);
+		Group group = BuilderUtils.buildGroup(matches, team1, team2, team3, team4);
 
 		assertEquals(Arrays.asList(team1, team2, team3, team4), getTeamStandings(group));
 	}
@@ -195,7 +195,7 @@ public class CalculateGroupStandingsTest {
 		matches.add(new Match(team2, team4, "21-0", "0-21", "21-0", false, false, 0, 0));
 		matches.add(new Match(team3, team4, "21-0", "21-0", null, false, false, 0, 0));
 
-		Group group = buildGroup(matches, team1, team2, team3, team4);
+		Group group = BuilderUtils.buildGroup(matches, team1, team2, team3, team4);
 
 		assertEquals(Arrays.asList(team3, team2, team1, team4), getTeamStandings(group));
 	}
@@ -211,7 +211,7 @@ public class CalculateGroupStandingsTest {
 		matches.add(new Match(team2, team4, "21-0", "21-19", null, false, false, 0, 0));
 		matches.add(new Match(team3, team4, "21-0", "21-5", null, false, false, 0, 0));
 
-		Group group = buildGroup(matches, team1, team2, team3, team4);
+		Group group = BuilderUtils.buildGroup(matches, team1, team2, team3, team4);
 
 		assertEquals(Arrays.asList(team1, team3, team2, team4), getTeamStandings(group));
 	}
@@ -226,7 +226,7 @@ public class CalculateGroupStandingsTest {
 		matches.add(new Match(team1, team3, "21-0", "12-21", "21-5", false, false, 0, 0));
 		matches.add(new Match(team2, team3, "21-0", "21-0", null, false, false, 0, 0));
 
-		Group group = buildGroup(matches, team1, team2, team3);
+		Group group = BuilderUtils.buildGroup(matches, team1, team2, team3);
 
 		assertEquals(Arrays.asList(team2, team1, team3), getTeamStandings(group));
 	}
@@ -241,7 +241,7 @@ public class CalculateGroupStandingsTest {
 		matches.add(new Match(team1, team3, "21-23", "27-25", "0-21", false, false, 0, 0));
 		matches.add(new Match(team1, team2, "21-23", "21-23", null, false, false, 0, 0));
 
-		Group group = buildGroup(matches, team1, team2, team3);
+		Group group = BuilderUtils.buildGroup(matches, team1, team2, team3);
 
 		assertEquals(Arrays.asList(team2, team3, team1), getTeamStandings(group));
 	}
@@ -256,7 +256,7 @@ public class CalculateGroupStandingsTest {
 		matches.add(new Match(team1, team3, "21-23", "0-21", null, false, false, 0, 0));
 		matches.add(new Match(team1, team2, "21-23", "21-23", null, false, false, 0, 0));
 
-		Group group = buildGroup(matches, team1, team2, team3);
+		Group group = BuilderUtils.buildGroup(matches, team1, team2, team3);
 
 		assertEquals(Arrays.asList(team3, team2, team1), getTeamStandings(group));
 	}
@@ -288,7 +288,7 @@ public class CalculateGroupStandingsTest {
 		matches.add(new Match(team1, team2, "0-21", "0-21", null, false, false, 0, 0));
 		matches.add(new Match(team2, team3, "0-21", "0-21", null, false, false, 0, 0));
 
-		Group group = buildGroup(matches, team1, team2, team3);
+		Group group = BuilderUtils.buildGroup(matches, team1, team2, team3);
 
 		assertEquals(Arrays.asList(team3, team2, team1), getTeamStandings(group));
 
@@ -313,21 +313,5 @@ public class CalculateGroupStandingsTest {
 		return result;
 	}
 
-	private Group buildGroup(List<Match> matches, Team... teams) {
-		Group group = new Group();
-
-		for (Team t : teams) {
-			group.addTeam(t);
-			t.setId(group.getTeams().indexOf(t) + 1);
-		}
-
-		for (Match m : matches) {
-			group.addMatch(m);
-		}
-
-		calc.add(group);
-
-		return group;
-	}
 
 }

@@ -2,6 +2,7 @@ package de.cweyermann.btc.server.entity;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -89,7 +90,6 @@ public class MatchTest {
 		assertEquals(1, match.getSets(match.getTeam1()));
 	}
 
-
 	@Test
 	public void twoSets_noSetsWonForLooser() {
 		Match match = play("21-12", "25-23", null);
@@ -104,21 +104,28 @@ public class MatchTest {
 		assertEquals(2, match.getSets(match.getTeam1()));
 	}
 
-	
 	@Test
 	public void threeSetsGetPoints_correct() {
 		Match match = play("4-21", "25-23", "21-3");
 
-		assertEquals(4+25+21, match.getPoints(match.getTeam1()));
-		assertEquals(21+23+3, match.getPoints(match.getTeam2()));
+		assertEquals(4 + 25 + 21, match.getPoints(match.getTeam1()));
+		assertEquals(21 + 23 + 3, match.getPoints(match.getTeam2()));
 	}
 
 	@Test
 	public void twoSets_pointsCorrect() {
 		Match match = play("4-21", "21-23", null);
 
-		assertEquals(4+21, match.getPoints(match.getTeam1()));
-		assertEquals(21+23, match.getPoints(match.getTeam2()));
+		assertEquals(4 + 21, match.getPoints(match.getTeam1()));
+		assertEquals(21 + 23, match.getPoints(match.getTeam2()));
+	}
+
+	@Test
+	public void matchNoTeams_NoWinner() {
+		Match m = new Match(null, null, null, null, null, false, false, 0, 0);
+
+		assertNull(m.getWinner());
+		assertNull(m.getLooser());
 	}
 
 	private Match play(String set1, String set2, String set3) {
@@ -154,4 +161,5 @@ public class MatchTest {
 	private String getLooser(String set1, String set2, String set3) {
 		return play(set1, set2, set3).getLooser().getPlayer1().getSurname();
 	}
+
 }

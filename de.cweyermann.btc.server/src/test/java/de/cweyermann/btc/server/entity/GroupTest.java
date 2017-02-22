@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import de.cweyermann.btc.server.entity.Group.GroupType;
+
 public class GroupTest {
 
 	@Test
@@ -42,5 +44,48 @@ public class GroupTest {
 		List<Match> matches = group.getMatches();
 		assertEquals(0, matches.get(0).getMatchnr());
 		assertEquals(1, matches.get(1).getMatchnr());
+	}
+
+	@Test
+	public void qualificationGroup_qualification()
+	{
+		Group group = new Group();
+		group.setQualification(true);
+	
+		assertEquals(GroupType.QUALIFICATION, group.getType());
+	}
+	
+	@Test
+	public void notQualification_posKept()
+	{
+		Group group = new Group();
+		group.setQualification(false);
+		group.setPosition(3);
+		group.setKo(true);
+		
+		assertEquals(GroupType.LOOSERSKO, group.getType());
+	}
+	
+
+	@Test
+	public void groupNoQualification_finalGroup()
+	{
+		Group group = new Group();
+		group.setQualification(false);
+		group.setPosition(1);
+	
+		assertEquals(GroupType.FINALGROUP, group.getType());
+	}
+	
+
+	@Test
+	public void koPos1_ko()
+	{
+		Group group = new Group();
+		group.setQualification(false);
+		group.setPosition(1);
+		group.setKo(true);
+
+		assertEquals(GroupType.KO, group.getType());
 	}
 }
