@@ -16,7 +16,7 @@ public class ShowClubs extends AbstractRestControl<ClubStandings> {
     private GetGroups getGroups;
     private CalculateClubStandings calculateClub;
 
-    public ShowClubs(CalculateClubStandings calculateClub, GetGroups getGroups, GetGroup getGroup) {
+    public ShowClubs(GetGroups getGroups, CalculateClubStandings calculateClub, GetGroup getGroup) {
         this.calculateClub = calculateClub;
         this.getGroups = getGroups;
         this.getGroup = getGroup;

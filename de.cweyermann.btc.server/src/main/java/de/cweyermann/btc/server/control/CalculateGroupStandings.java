@@ -27,7 +27,7 @@ public class CalculateGroupStandings {
 
 	private static final Logger LOG = LogManager.getLogger(CalculateGroupStandings.class.getName());
 
-	public void add(Group group) {
+	public void addCalculations(Group group) {
 		if (!group.isKo()) {
 			calculateStandings(group);
 			setRankings(group.getStandings(), group.getMatches());

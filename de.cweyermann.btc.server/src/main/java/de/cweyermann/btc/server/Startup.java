@@ -68,12 +68,12 @@ public class Startup extends AbstractVerticle {
 		GetDisciplines getDisciplines = new GetDisciplines(dbConnection);
 		GetGroup getGroup = new GetGroup(dbConnection);
 		GetGroups getGroups = new GetGroups(dbConnection);
-		CalculateGroupStandings calculate = new CalculateGroupStandings();
+		CalculateGroupStandings calculateGroup = new CalculateGroupStandings();
 		CalculateClubStandings calculateClub = new CalculateClubStandings(10, 6, 4, 2, 1);
 
 		showDisciplines = new ShowDisciplines(getDisciplines);
-		showgroupOverview = new ShowGroupOverview(calculate, getGroup, getGroups);
-		showClubs = new ShowClubs(calculateClub, getGroups, getGroup);
-		showGroup = new ShowGroup(getGroup, calculate);
+		showgroupOverview = new ShowGroupOverview(getGroups, calculateGroup, getGroup);
+		showClubs = new ShowClubs(getGroups, calculateClub, getGroup);
+		showGroup = new ShowGroup(getGroup, calculateGroup);
 	}
 }
