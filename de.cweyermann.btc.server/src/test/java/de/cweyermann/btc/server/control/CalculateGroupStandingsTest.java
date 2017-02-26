@@ -28,7 +28,7 @@ public class CalculateGroupStandingsTest {
 	public void emptyGroup_noStandings() {
 		Group group = new Group();
 
-		calc.add(group);
+		calc.addCalculations(group);
 
 		assertEquals(0, group.getStandings().size());
 	}
@@ -272,7 +272,7 @@ public class CalculateGroupStandingsTest {
 		g.addMatch(new Match(team1, team2, "0-21", "0-21", null, false, false, 0, 0));
 		g.setKo(true);
 		
-		calc.add(g);
+		calc.addCalculations(g);
 		
 		assertTrue(g.getStandings().isEmpty());
 	}
