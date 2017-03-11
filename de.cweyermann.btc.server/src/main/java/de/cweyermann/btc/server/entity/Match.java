@@ -106,7 +106,7 @@ public class Match extends AbstractEntity {
 			int p1points = Integer.parseInt(matcher.group(1));
 			int p2points = Integer.parseInt(matcher.group(2));
 
-			if (team1 != null && team1.equals(team)) {
+			if (team.equals(team1)) {
 				result = p1points;
 			} else {
 				result = p2points;

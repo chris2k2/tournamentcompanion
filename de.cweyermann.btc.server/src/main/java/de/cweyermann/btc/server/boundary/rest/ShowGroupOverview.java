@@ -22,7 +22,7 @@ public class ShowGroupOverview extends AbstractRestControl<MoreGroups> {
 	private GetGroup getGroup;
 	private GetGroups getGroups;
 
-	public ShowGroupOverview(CalculateGroupStandings calculate, GetGroup getGroup, GetGroups getGroups) {
+	public ShowGroupOverview(GetGroups getGroups, CalculateGroupStandings calculate, GetGroup getGroup) {
 		this.calculate = calculate;
 		this.getGroup = getGroup;
 		this.getGroups = getGroups;
@@ -35,7 +35,7 @@ public class ShowGroupOverview extends AbstractRestControl<MoreGroups> {
 
 		for (Integer key : getGroups.withParent(discId).getChilds().keySet()) {
 			Group group = getGroup.get(key);
-			calculate.add(group);
+			calculate.addCalculations(group);
 			groups.add(group);
 		}
 

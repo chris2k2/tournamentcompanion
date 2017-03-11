@@ -20,7 +20,7 @@ public class ShowGroup extends AbstractRestControl<Group> {
 		int groupId = Integer.parseInt(params.get("group"));
 		
 		Group group2 = group.get(groupId);
-		calc.add(group2);
+		calc.addCalculations(group2);
 		
 		return group2;
 	}

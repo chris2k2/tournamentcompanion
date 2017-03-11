@@ -4,18 +4,17 @@ import java.util.List;
 
 public class MoreGroups extends AbstractEntity {
 
-	private List<Group> groups;
-	
-	public MoreGroups(List<Group> groups)
-	{
-		this.setGroups(groups);
-	}
+    private List<Group> groups;
 
-	public List<Group> getGroups() {
-		return groups;
-	}
+    public MoreGroups(List<Group> groups) {
+        this.setGroups(groups);
+    }
 
-	public void setGroups(List<Group> groups) {
-		this.groups = groups;
-	}
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
 }
