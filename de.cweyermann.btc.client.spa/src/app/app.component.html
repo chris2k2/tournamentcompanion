@@ -2,29 +2,27 @@
 <nav class="navbar navbar-inverse" data-spy="affix">
 	<div class="container-fluid">
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target="#myNavbar">
+			<button type="button" class="navbar-toggle collapsed"
+				(click)="toggleCollapse()" aria-expanded="false">
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" [routerLink]="['/welcome']">Zirndorfer
 				SMS</a>
 		</div>
-		<div class="collapse navbar-collapse" id="myNavbar">
+		<div class="navbar-collapse" id="myNavbar"
+			[class.collapse]="isCollapsed">
 			<ul class="nav navbar-nav">
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="">Disziplinen<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a [routerLink]="['/groups/hda']" class="hidden-xs">HD
-								- A</a> <a href="#" class="visible-xs" data-toggle="collapse"
-							data-target=".navbar-collapse">HD - A</a></li>
+					<ul class="dropdown-menu" (click)="toggleCollapse()"
+						aria-expanded="false">
+						<li><a routerLink="/groups/hda">HD - A</a></li>
 					</ul></li>
-				<li><a [routerLink]="['/matches']" class="hidden-xs">Spielplan</a><a
-					[routerLink]="['/matches']" data-toggle="collapse"
-					data-target=".navbar-collapse" class="visible-xs">Spielplan</a></li>
-				<li><a [routerLink]="['/clubs']" class="hidden-xs">Vereinswertung</a><a
-					[routerLink]="['/clubs']" class="visible-xs" data-toggle="collapse"
-					data-target=".navbar-collapse">Vereinswertung</a></li>
+				<li><a routerLink="/matches" (click)="toggleCollapse()"
+					aria-expanded="false">Spielplan</a></li>
+				<li><a routerLink="/clubs" (click)="toggleCollapse()"
+					aria-expanded="false">Vereinswertung</a></li>
 			</ul>
 		</div>
 	</div>
