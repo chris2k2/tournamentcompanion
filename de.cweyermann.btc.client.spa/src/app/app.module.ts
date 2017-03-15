@@ -27,7 +27,8 @@ import { RouterModule } from '@angular/router';
       {path: 'matches', component: MatchesComponent},
       {path: 'groups/:id', component: GroupsComponent},
       {path: 'welcome', component: WelcomeComponent},
-      {path: '', redirectTo: 'welcome', pathMatch: 'full'}
+      {path: '', redirectTo: 'welcome', pathMatch: 'full'},
+      {path: '**', component: WelcomeComponent}
     ])],
   providers: [],
   bootstrap: [AppComponent]
