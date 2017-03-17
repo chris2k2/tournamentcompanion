@@ -100,7 +100,7 @@ public class Match extends AbstractEntity {
 	private int getPoints(Team team, String set) {
 		int result = 0;
 
-		if (set != null) {
+		if (set != null && team != null) {
 			Matcher matcher = PATTERN.matcher(set);
 			matcher.matches();
 			int p1points = Integer.parseInt(matcher.group(1));

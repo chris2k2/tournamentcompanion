@@ -3,12 +3,10 @@ package de.cweyermann.btc.server.control;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import de.cweyermann.btc.server.entity.ClubStanding;
 import de.cweyermann.btc.server.entity.ClubStandings;
 import de.cweyermann.btc.server.entity.Group;
 import de.cweyermann.btc.server.entity.Match;

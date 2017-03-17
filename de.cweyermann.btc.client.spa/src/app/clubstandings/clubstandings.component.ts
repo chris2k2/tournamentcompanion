@@ -1,3 +1,6 @@
+import { BackendService } from '../backend.service';
+import { IClubStanding } from './iclubstanding';
+import { IClubStandings } from './iclubstandings';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClubstandingsComponent implements OnInit {
 
-  constructor() { }
+  errorMessage: string;
+  standings: IClubStandings;
+
+  constructor(private beService: BackendService) { }
 
   ngOnInit() {
+    this.standings = JSON.parse("{ \"standings\":[] }");
+    
+    this.beService.getClubStandings().subscribe(
+      cs => this.standings = cs,
+      error => this.errorMessage = <any>error);
   }
-
 }

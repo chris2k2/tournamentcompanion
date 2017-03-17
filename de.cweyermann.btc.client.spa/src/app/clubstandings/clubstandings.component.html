@@ -5,14 +5,11 @@
 		<th>Verein</th>
 		<th>Punkte</th>
 	</tr>
-	<tr>
-		<td>1.</td>
-		<td>TSV Zirndorf</td>
-		<td>10</td>
+
+	<tr *ngFor='let x of standings.standings'>
+		<td>{{x.position}}.</td>
+		<td>{{x.clubName}}</td>
+		<td>{{x.points}}</td>
 	</tr>
-	<tr>
-		<td>2.</td>
-		<td>China</td>
-		<td>6</td>
-	</tr>
+
 </table>

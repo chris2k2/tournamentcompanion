@@ -127,6 +127,13 @@ public class MatchTest {
 		assertNull(m.getWinner());
 		assertNull(m.getLooser());
 	}
+	
+	@Test
+	public void getLooser_worksWithNull() {
+	    Match m = new Match(new Team(), null, "21-0", null, null, false, false, 1, 1);
+
+            assertNull(m.getLooser());
+	}
 
 	private Match play(String set1, String set2, String set3) {
 		return play(set1, set2, set3, false, false);
