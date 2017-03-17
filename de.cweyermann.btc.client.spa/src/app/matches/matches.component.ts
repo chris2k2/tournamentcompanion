@@ -1,15 +1,22 @@
+import { BackendService } from '../backend.service';
+import { IMatches } from './imatches';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-matches',
   templateUrl: './matches.component.html',
-  styleUrls: ['./matches.component.css']
 })
 export class MatchesComponent implements OnInit {
 
-  constructor() { }
+  matches: IMatches;
+
+  constructor(private beService: BackendService) { }
 
   ngOnInit() {
-  }
+    this.matches = JSON.parse('{ "matches":[] }');
 
+    this.beService.getMatches().subscribe(
+      cs => this.matches = cs,
+      error => console.log(error));
+  }
 }

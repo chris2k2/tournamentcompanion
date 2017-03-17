@@ -4,10 +4,9 @@
 			<th>Spiel</th>
 			<th>Ergebnis</th>
 		</tr>
-		<tr>
-			<td>Christian Weyermann &amp; Mario Fischer - Lee Chong Wei
-				&amp; Lin Dan</td>
-			<td>21:19 19:21 22:20</td>
+		<tr *ngFor='let m of matches.matches'>
+			<td>{{m.matchString}}</td>
+			<td>{{m.result}}</td>
 		</tr>
 	</table>
 </section>

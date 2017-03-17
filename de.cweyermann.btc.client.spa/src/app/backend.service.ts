@@ -7,6 +7,7 @@ import 'rxjs/add/operator/do';
 
 import { IClubStandings } from './clubstandings/iclubstandings';
 import { IDisciplines } from './idisciplines';
+import { IMatches } from './matches/imatches';
 
 @Injectable()
 export class BackendService {
@@ -22,13 +23,20 @@ export class BackendService {
       .catch(this.handleError);
   }
 
-    getDisciplines(): Observable<IDisciplines> {
+  getDisciplines(): Observable<IDisciplines> {
     return this.http.get(this.url + 'disciplines/')
       .map((response: Response) => <IDisciplines>response.json())
       .do(response => console.log(JSON.stringify(response)))
       .catch(this.handleError);
   }
-  
+
+  getMatches(): Observable<IMatches> {
+    return this.http.get(this.url + 'matches/')
+      .map((response: Response) => <IMatches>response.json())
+      .do(response => console.log(JSON.stringify(response)))
+      .catch(this.handleError);
+  }
+
   private handleError(error: Response | any) {
     // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;
