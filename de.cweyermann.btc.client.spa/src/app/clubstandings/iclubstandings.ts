@@ -1,5 +1,9 @@
-import { IClubStanding } from './iclubstanding';
+export interface IClubStanding {
+  'clubName': string;
+  'points': number;
+  'position': number;
+};
 
 export interface IClubStandings {
   'standings': IClubStanding[];
-}
+};
