@@ -10,17 +10,17 @@ import de.cweyermann.btc.server.boundary.rest.ShowClubs;
 import de.cweyermann.btc.server.boundary.rest.ShowDisciplines;
 import de.cweyermann.btc.server.boundary.rest.ShowGroup;
 import de.cweyermann.btc.server.boundary.rest.ShowGroupOverview;
+import de.cweyermann.btc.server.boundary.rest.ShowMatches;
 import de.cweyermann.btc.server.boundary.tpfile.GetDisciplines;
 import de.cweyermann.btc.server.boundary.tpfile.GetGroup;
 import de.cweyermann.btc.server.boundary.tpfile.GetGroups;
+import de.cweyermann.btc.server.boundary.tpfile.GetMatches;
 import de.cweyermann.btc.server.boundary.tpfile.TpFileConnectionInvalid;
 import de.cweyermann.btc.server.control.CalculateClubStandings;
 import de.cweyermann.btc.server.control.CalculateGroupStandings;
 import de.cweyermann.btc.server.entity.AbstractEntity;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
-import io.vertx.core.Handler;
-import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
@@ -33,6 +33,7 @@ public class Startup extends AbstractVerticle {
     private ShowGroupOverview showgroupOverview;
     private ShowClubs showClubs;
     private ShowGroup showGroup;
+    private ShowMatches showMatches;
 
     @Override
     public void start(Future<Void> startFuture) throws Exception {
@@ -73,6 +74,7 @@ public class Startup extends AbstractVerticle {
         registerRoute("disciplines", showDisciplines, router, corsHandler);
         registerRoute("disciplines/:disciplines", showgroupOverview, router, corsHandler);
         registerRoute("groups/:group", showGroup, router, corsHandler);
+        registerRoute("matches", showMatches, router, corsHandler);
 
         HttpServer server = vertx.createHttpServer();
         server.requestHandler(router::accept).listen(port, x -> startFuture.complete());
@@ -88,12 +90,14 @@ public class Startup extends AbstractVerticle {
         GetDisciplines getDisciplines = new GetDisciplines(dbConnection);
         GetGroup getGroup = new GetGroup(dbConnection);
         GetGroups getGroups = new GetGroups(dbConnection);
+        GetMatches getMatches = new GetMatches(dbConnection);
         CalculateGroupStandings calculateGroup = new CalculateGroupStandings();
         CalculateClubStandings calculateClub = new CalculateClubStandings(10, 6, 4, 2, 1);
-
+        
         showDisciplines = new ShowDisciplines(getDisciplines);
         showgroupOverview = new ShowGroupOverview(getGroups, calculateGroup, getGroup);
         showClubs = new ShowClubs(getGroups, calculateClub, getGroup);
         showGroup = new ShowGroup(getGroup, calculateGroup);
+        showMatches = new ShowMatches(getMatches);
     }
 }

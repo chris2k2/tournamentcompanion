@@ -3,227 +3,267 @@ package de.cweyermann.btc.server.entity;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Match extends AbstractEntity {
 
-	private final static Pattern PATTERN = Pattern.compile("(\\d+)[-](\\d+)");
+    private static final String UNKNOWN = "<unbekannt>";
 
-	private Team team1;
+    private final static Pattern PATTERN = Pattern.compile("(\\d+)[-](\\d+)");
 
-	private Team team2;
+    private Team team1;
 
-	private String set1;
+    private Team team2;
 
-	private String set2;
+    private String set1;
 
-	private String set3;
+    private String set2;
 
-	private boolean walkoverTeam1;
+    private String set3;
 
-	private boolean walkoverTeam2;
+    private boolean walkoverTeam1;
 
-	private int matchnr;
+    private boolean walkoverTeam2;
 
-	private int roundnr;
+    private int matchnr;
 
-	public Match() {
+    private int roundnr;
 
-	}
+    public Match() {
 
-	public Match(Team team1, Team team2, String set1, String set2, String set3, boolean walkoverTeam1,
-			boolean walkoverTeam2, int matchnr, int roundnr) {
-		super();
-		this.team1 = team1;
-		this.team2 = team2;
-		this.set1 = set1;
-		this.set2 = set2;
-		this.set3 = set3;
-		this.walkoverTeam1 = walkoverTeam1;
-		this.walkoverTeam2 = walkoverTeam2;
-		this.matchnr = matchnr;
-		this.roundnr = roundnr;
-	}
+    }
 
-	private boolean didTeam1win(String set) {
-		return didTeamWin(team1, set);
-	}
+    public Match(Team team1, Team team2, String set1, String set2, String set3,
+            boolean walkoverTeam1, boolean walkoverTeam2, int matchnr, int roundnr) {
+        super();
+        this.team1 = team1;
+        this.team2 = team2;
+        this.set1 = set1;
+        this.set2 = set2;
+        this.set3 = set3;
+        this.walkoverTeam1 = walkoverTeam1;
+        this.walkoverTeam2 = walkoverTeam2;
+        this.matchnr = matchnr;
+        this.roundnr = roundnr;
+    }
 
-	private boolean didTeamWin(Team team, String set) {
-		boolean won = false;
+    private boolean didTeam1win(String set) {
+        return didTeamWin(team1, set);
+    }
 
-		if (set != null) {
-			int p1points = getPoints(team1, set);
-			int p2points = getPoints(team2, set);
-			won = p1points > p2points;
-		}
+    private boolean didTeamWin(Team team, String set) {
+        boolean won = false;
 
-		if (walkoverTeam1) {
-			won = false;
-		}
+        if (set != null) {
+            int p1points = getPoints(team1, set);
+            int p2points = getPoints(team2, set);
+            won = p1points > p2points;
+        }
 
-		if (walkoverTeam2) {
-			won = true;
-		}
+        if (walkoverTeam1) {
+            won = false;
+        }
 
-		if (team != null && team.equals(team2)) {
-			won = !won;
-		}
+        if (walkoverTeam2) {
+            won = true;
+        }
 
-		return won;
-	}
+        if (team != null && team.equals(team2)) {
+            won = !won;
+        }
 
-	public Team getLooser() {
-		Team winner = getWinner();
-		Team looser = null;
+        return won;
+    }
 
-		if (winner != null && winner.equals(team2)) {
-			looser = team1;
-		} else if (winner != null) {
-			looser = team2;
-		}
+    public Team getLooser() {
+        Team winner = getWinner();
+        Team looser = null;
 
-		return looser;
-	}
+        if (winner != null && winner.equals(team2)) {
+            looser = team1;
+        } else if (winner != null) {
+            looser = team2;
+        }
 
-	public int getMatchnr() {
-		return matchnr;
-	}
+        return looser;
+    }
 
-	public int getPoints(Team team) {
-		int counter = 0;
-		counter += getPoints(team, set1);
-		counter += getPoints(team, set2);
-		counter += getPoints(team, set3);
+    public int getMatchnr() {
+        return matchnr;
+    }
 
-		return counter;
-	}
+    public int getPoints(Team team) {
+        int counter = 0;
+        counter += getPoints(team, set1);
+        counter += getPoints(team, set2);
+        counter += getPoints(team, set3);
 
-	private int getPoints(Team team, String set) {
-		int result = 0;
+        return counter;
+    }
 
-		if (set != null && team != null) {
-			Matcher matcher = PATTERN.matcher(set);
-			matcher.matches();
-			int p1points = Integer.parseInt(matcher.group(1));
-			int p2points = Integer.parseInt(matcher.group(2));
+    private int getPoints(Team team, String set) {
+        int result = 0;
 
-			if (team.equals(team1)) {
-				result = p1points;
-			} else {
-				result = p2points;
-			}
-		}
+        if (set != null && team != null) {
+            Matcher matcher = PATTERN.matcher(set);
+            matcher.matches();
+            int p1points = Integer.parseInt(matcher.group(1));
+            int p2points = Integer.parseInt(matcher.group(2));
 
-		return result;
-	}
+            if (team.equals(team1)) {
+                result = p1points;
+            } else {
+                result = p2points;
+            }
+        }
 
-	public int getRoundnr() {
-		return roundnr;
-	}
+        return result;
+    }
 
-	public String getSet1() {
-		return set1;
-	}
+    public int getRoundnr() {
+        return roundnr;
+    }
 
-	public String getSet2() {
-		return set2;
-	}
+    public String getSet1() {
+        return set1;
+    }
 
-	public String getSet3() {
-		return set3;
-	}
+    public String getSet2() {
+        return set2;
+    }
 
-	public int getSets(Team team) {
-		int counter = 0;
-		if (didTeamWin(team, set1)) {
-			counter++;
-		}
-		if (didTeamWin(team, set2)) {
-			counter++;
-		}
-		if (counter == 1 && didTeamWin(team, set3)) {
-			counter++;
-		}
+    public String getSet3() {
+        return set3;
+    }
+    
+    public String getResult() {
+        String result = "";
 
-		return counter;
-	}
+        result = appendSet(result, set1);
+        result = appendSet(result, set2);
+        result = appendSet(result, set3);
+        
+        return result.trim();
+    }
 
-	public Team getTeam1() {
-		return team1;
-	}
+    private String appendSet(String result, String set) {
+        if(!StringUtils.isEmpty(set)) {
+            result += set + " ";
+        }
+        return result;
+    }
+    
 
-	public Team getTeam2() {
-		return team2;
-	}
+    public int getSets(Team team) {
+        int counter = 0;
+        if (didTeamWin(team, set1)) {
+            counter++;
+        }
+        if (didTeamWin(team, set2)) {
+            counter++;
+        }
+        if (counter == 1 && didTeamWin(team, set3)) {
+            counter++;
+        }
 
-	public Team getWinner() {
-		boolean p1Won = didTeam1win(set1);
-		boolean p1Won2 = didTeam1win(set2);
-		boolean p1Won3 = didTeam1win(set3);
+        return counter;
+    }
 
-		Team winner = null;
-		if (p1Won && p1Won2) {
-			winner = team1;
-		} else if (!p1Won && !p1Won2) {
-			winner = team2;
-		} else if (p1Won3) {
-			winner = team1;
-		} else {
-			winner = team2;
-		}
+    public Team getTeam1() {
+        return team1;
+    }
 
-		return winner;
-	}
+    public Team getTeam2() {
+        return team2;
+    }
 
-	public boolean isDone() {
-		return set1 != null || walkoverTeam1 || walkoverTeam2;
-	}
+    public Team getWinner() {
+        boolean p1Won = didTeam1win(set1);
+        boolean p1Won2 = didTeam1win(set2);
+        boolean p1Won3 = didTeam1win(set3);
 
-	public boolean isWalkoverTeam1() {
-		return walkoverTeam1;
-	}
+        Team winner = null;
+        if (p1Won && p1Won2) {
+            winner = team1;
+        } else if (!p1Won && !p1Won2) {
+            winner = team2;
+        } else if (p1Won3) {
+            winner = team1;
+        } else {
+            winner = team2;
+        }
 
-	public boolean isWalkoverTeam2() {
-		return walkoverTeam2;
-	}
+        return winner;
+    }
 
-	public void setMatchnr(int matchnr) {
-		this.matchnr = matchnr;
-	}
+    public boolean isDone() {
+        return set1 != null || walkoverTeam1 || walkoverTeam2;
+    }
 
-	public void setRoundnr(int roundnr) {
-		this.roundnr = roundnr;
-	}
+    public boolean isWalkoverTeam1() {
+        return walkoverTeam1;
+    }
 
-	public void setSet1(String set1) {
-		this.set1 = set1;
-	}
+    public boolean isWalkoverTeam2() {
+        return walkoverTeam2;
+    }
 
-	public void setSet2(String set2) {
-		this.set2 = set2;
-	}
+    public void setMatchnr(int matchnr) {
+        this.matchnr = matchnr;
+    }
 
-	public void setSet3(String set3) {
-		this.set3 = set3;
-	}
+    public void setRoundnr(int roundnr) {
+        this.roundnr = roundnr;
+    }
 
-	public void setTeam1(Team team1) {
-		this.team1 = team1;
-	}
+    public void setSet1(String set1) {
+        this.set1 = set1;
+    }
 
-	public void setTeam2(Team team2) {
-		this.team2 = team2;
-	}
+    public void setSet2(String set2) {
+        this.set2 = set2;
+    }
 
-	public void setWalkoverTeam1(boolean walkoverTeam1) {
-		this.walkoverTeam1 = walkoverTeam1;
-	}
+    public void setSet3(String set3) {
+        this.set3 = set3;
+    }
 
-	public void setWalkoverTeam2(boolean walkoverTeam2) {
-		this.walkoverTeam2 = walkoverTeam2;
-	}
+    public void setTeam1(Team team1) {
+        this.team1 = team1;
+    }
 
-	@Override
-	public String toString() {
-		return team1 + " vs. " + team2 + " " + set1 + " " + set2 + " " + set3;
-	}
+    public void setTeam2(Team team2) {
+        this.team2 = team2;
+    }
+
+    public void setWalkoverTeam1(boolean walkoverTeam1) {
+        this.walkoverTeam1 = walkoverTeam1;
+    }
+
+    public void setWalkoverTeam2(boolean walkoverTeam2) {
+        this.walkoverTeam2 = walkoverTeam2;
+    }
+
+    public String getMatchString() {
+        String teamName = "";
+
+        if (team1 != null) {
+            teamName += team1.getTeamname();
+        } else {
+            teamName += UNKNOWN;
+        }
+
+        if (team2 != null) {
+            teamName += " - " + team2.getTeamname();
+        } else {
+            teamName += " - " + UNKNOWN;
+        }
+
+        return teamName;
+    }
+
+    @Override
+    public String toString() {
+        return team1 + " vs. " + team2 + " " + set1 + " " + set2 + " " + set3;
+    }
 }

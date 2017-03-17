@@ -2,55 +2,67 @@ package de.cweyermann.btc.server.entity;
 
 public class Player extends AbstractEntity {
 
-	private String surname;
+    private String surname;
 
-	private String club;
-	
-	private String firstName;
+    private String club;
 
-	private String tournamentId;
+    private String firstName;
 
-	public Player() {
+    private String tournamentId;
 
-	}
+    public Player() {
 
-	public Player(String surname, String firstName, String tournamentId) {
-		super();
-		this.surname = surname;
-		this.firstName = firstName;
-		this.tournamentId = tournamentId;
-	}
+    }
 
-	public String getClub() {
-		return club;
-	}
+    public Player(String surname, String firstName, String tournamentId) {
+        super();
+        this.surname = surname;
+        this.firstName = firstName;
+        this.tournamentId = tournamentId;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getClub() {
+        return club;
+    }
 
-	public String getSurname() {
-		return surname;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public String getTournamentId() {
-		return tournamentId;
-	}
+    public String getSurname() {
+        return surname;
+    }
 
-	public void setClub(String club) {
-		this.club = club;
-	}
+    public String getTournamentId() {
+        return tournamentId;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setClub(String club) {
+        this.club = club;
+    }
 
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public void setTournamentId(String tournamentId) {
-		this.tournamentId = tournamentId;
-	}
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setTournamentId(String tournamentId) {
+        this.tournamentId = tournamentId;
+    }
+
+    public String getName() {
+        String name = firstName + " " + surname;
+        if (surname == null) {
+            name = firstName;
+        }
+        if (firstName == null) {
+            name = surname;
+        }
+
+        return name;
+    }
 
 }
