@@ -37,6 +37,13 @@ export class BackendService {
       .catch(this.handleError);
   }
 
+  getDiscipline(id: number): Observable<Object> {
+    return this.http.get(this.url + 'disciplines/' + id)
+      .map((response: Response) => <Object>response.json())
+      .do(response => console.log(JSON.stringify(response)))
+      .catch(this.handleError);
+  }
+
   private handleError(error: Response | any) {
     // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;
