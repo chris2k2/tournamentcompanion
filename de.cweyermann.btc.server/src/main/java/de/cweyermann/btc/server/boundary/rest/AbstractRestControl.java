@@ -28,7 +28,7 @@ public abstract class AbstractRestControl<T extends AbstractEntity> extends Abst
 		T entry = route(context.request().params());
 		String encodePrettily = Json.encodePrettily(entry);
 		context.response().putHeader("content-type", "application/json; charset=utf-8")
-				.putHeader("cache-control", "public, max-age=300").end(encodePrettily);
+				.putHeader("cache-control", "public, max-age=10").end(encodePrettily);
 		
 		LOG.info("Took : {} ms", stopwatch.elapsed(TimeUnit.MILLISECONDS));
 	}

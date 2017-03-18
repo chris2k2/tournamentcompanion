@@ -89,4 +89,16 @@ public class GetGroupTest {
 
         assertEquals(6, groupA.getMatches().size());
     }
+    
+    @Test
+    public void ignoreGoodbyesInGroupStage() {
+        GetGroup uut = new GetGroup(TpFileUtils.getConnection("bigdemo.tp"));
+
+        Group groupA = uut.get(1);
+        Group groupKo9 = uut.get(6);
+
+        assertEquals(3, groupA.getMatches().size());
+        assertEquals(7, groupKo9.getMatches().size());
+        
+    }
 }
