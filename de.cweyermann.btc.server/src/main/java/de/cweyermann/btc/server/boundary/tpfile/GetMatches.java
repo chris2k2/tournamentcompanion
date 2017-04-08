@@ -32,13 +32,13 @@ public class GetMatches extends AbstractTpFileControl {
 		ResultSet resultSet = executeSql("SELECT hometeam.entry, awayteam.entry, "
 				+ "thematch.team1set1, thematch.team2set1, thematch.team1set2, "
 				+ "thematch.team2set2, thematch.team1set3, thematch.team2set3, "
-				+ "hometeam.walkover, awayteam.walkover, thematch.matchnr, thematch.roundnr, Draw.name, Draw.DrawType "
-				+ "FROM PlayerMatch thematch "
+				+ "hometeam.walkover, awayteam.walkover, thematch.matchnr, thematch.roundnr, "
+				+ "Draw.name, Draw.DrawType, thematch.plandate " + "FROM PlayerMatch thematch "
 				+ "INNER JOIN PlayerMatch AS hometeam ON thematch.van1 = hometeam.planning "
 				+ "INNER JOIN PlayerMatch AS awayteam ON thematch.van2 = awayteam.planning "
 				+ "INNER JOIN Draw ON draw.id = thematch.draw "
 				+ "AND thematch.draw = hometeam.draw AND thematch.draw = awayteam.draw " + "AND reversehomeaway=FALSE "
-				+ "AND thematch.roundnr>0;");
+				+ "AND thematch.roundnr>0 	AND plandate > #2000-01-01 00:00:00#" + "ORDER BY thematch.plandate;");
 
 		try {
 			return convertMatches(resultSet);
@@ -61,9 +61,10 @@ public class GetMatches extends AbstractTpFileControl {
 			match.setWalkoverTeam2(rs.getBoolean(10));
 			match.setMatchnr(rs.getInt(11));
 			match.setRoundnr(rs.getInt(12));
+			match.setDate(rs.getTimestamp(15));
 
 			boolean isKo = rs.getInt(14) == GetGroup.KO_TYPE;
-			
+
 			if (isKo || (match.getTeam1() != null && match.getTeam2() != null)) {
 				matches.add(match);
 			}

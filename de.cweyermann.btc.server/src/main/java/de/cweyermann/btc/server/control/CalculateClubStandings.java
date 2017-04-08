@@ -27,12 +27,15 @@ public class CalculateClubStandings {
     private final int second;
     private final int first;
 
-    public CalculateClubStandings(int first, int second, int third, int fourth, int loosersWinner) {
+	private CalculateGroupStandings calc;
+
+    public CalculateClubStandings(int first, int second, int third, int fourth, int loosersWinner, CalculateGroupStandings calc) {
         this.first = first;
         this.second = second;
         this.third = third;
         this.fourth = fourth;
         this.loosersWinner = loosersWinner;
+		this.calc = calc;
     }
 
     public ClubStandings execute(List<Group> groups) {
@@ -42,6 +45,7 @@ public class CalculateClubStandings {
         for (Group group : groups) {
             switch (group.getType()) {
             case FINALGROUP:
+            	calc.addCalculations(group);
                 calculateSingleGroup(club2Standing, group);
                 break;
             case KO:
@@ -153,7 +157,7 @@ public class CalculateClubStandings {
                 .stream()
                 .filter(m -> m.getRoundnr() == max)
                 .collect(Collectors.toList());
-        Collections.sort(finals, (a, b) -> a.getMatchnr() - b.getMatchnr());
+        Collections.sort(finals, (a, b) -> b.getMatchnr() - a.getMatchnr());
         return finals;
     }
 
@@ -186,9 +190,13 @@ public class CalculateClubStandings {
         if (team.getPlayer2() != null) {
             double halfPoints = points / 2.0;
             String clubName2 = team.getPlayer2().getClub();
+            
+            LOG.info("Awarding Points: " + halfPoints + " to " + clubName); 
+            LOG.info("Awarding Points: " + halfPoints + " to " + clubName2); 
             club2Standing.get(clubName).addPoints(halfPoints);
             club2Standing.get(clubName2).addPoints(halfPoints);
         } else {
+            LOG.info("Awarding Points: " + points + " to " + clubName); 
             club2Standing.get(clubName).addPoints(points);
         }
     }

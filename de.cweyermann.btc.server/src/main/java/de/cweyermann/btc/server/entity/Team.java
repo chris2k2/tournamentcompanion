@@ -30,11 +30,11 @@ public class Team extends AbstractEntryWithId {
         String teamName = "";
 
         if (player1 != null) {
-            teamName += player1.getName();
+            teamName += player1.getSurname();
         }
 
         if (player2 != null) {
-            teamName += "/" + player2.getName();
+            teamName += "/" + player2.getSurname();
         }
         
         return teamName;

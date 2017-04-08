@@ -15,6 +15,6 @@ public class GetMatchesTest {
 
         List<Match> matches = uut.all().getMatches();
 
-        assertEquals(26, matches.size());
+        assertEquals(14, matches.size());
     }
 }

@@ -23,8 +23,6 @@ public final class BuilderUtils {
 			group.addMatch(m);
 		}
 
-		new CalculateGroupStandings().addCalculations(group);
-
 		return group;
 	}
 

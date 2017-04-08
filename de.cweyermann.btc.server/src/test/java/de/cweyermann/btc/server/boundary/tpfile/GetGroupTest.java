@@ -87,7 +87,7 @@ public class GetGroupTest {
 
         Group groupA = uut.get(1);
 
-        assertEquals(6, groupA.getMatches().size());
+        assertEquals(3, groupA.getMatches().size());
     }
     
     @Test

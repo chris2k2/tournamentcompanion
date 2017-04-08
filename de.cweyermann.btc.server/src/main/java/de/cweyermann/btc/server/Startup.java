@@ -92,7 +92,7 @@ public class Startup extends AbstractVerticle {
         GetGroups getGroups = new GetGroups(dbConnection);
         GetMatches getMatches = new GetMatches(dbConnection);
         CalculateGroupStandings calculateGroup = new CalculateGroupStandings();
-        CalculateClubStandings calculateClub = new CalculateClubStandings(10, 6, 4, 2, 1);
+        CalculateClubStandings calculateClub = new CalculateClubStandings(10, 6, 4, 2, 1, calculateGroup);
         
         showDisciplines = new ShowDisciplines(getDisciplines);
         showgroupOverview = new ShowGroupOverview(getGroups, calculateGroup, getGroup);

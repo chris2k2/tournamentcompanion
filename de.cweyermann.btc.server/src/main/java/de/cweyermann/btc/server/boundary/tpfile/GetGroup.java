@@ -40,8 +40,8 @@ public class GetGroup extends AbstractTpFileControl {
 				+ "FROM	PlayerMatch thematch INNER JOIN PlayerMatch AS hometeam ON thematch.van1 = hometeam.planning "
 				+ "INNER JOIN PlayerMatch AS awayteam ON thematch.van2 = awayteam.planning "
 				+ "INNER JOIN Draw ON draw.id = thematch.draw WHERE draw.id = " + id + " "
-				+ "AND thematch.draw = hometeam.draw AND thematch.draw = awayteam.draw " + "AND reversehomeaway=FALSE "
-				+ "ORDER BY thematch.roundnr, thematch.matchnr;");
+				+ "AND thematch.draw = hometeam.draw AND thematch.draw = awayteam.draw " + "AND thematch.roundnr>0 "
+				+ "AND reversehomeaway=FALSE " + "ORDER BY thematch.roundnr, thematch.matchnr;");
 
 		try {
 			convertMatches(group, resultSet);

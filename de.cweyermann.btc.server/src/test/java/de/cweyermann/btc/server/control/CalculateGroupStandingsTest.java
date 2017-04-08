@@ -43,7 +43,8 @@ public class CalculateGroupStandingsTest {
         matches.add(new Match(team1, team2, "21-3", "21-2", null, false, false, 0, 0));
 
         Group group = BuilderUtils.buildGroup(matches, team1, team2);
-
+        calc.addCalculations(group);
+        
         List<Standing> standings = group.getStandings();
         Standing first = standings.get(0);
         assertEquals(team1, first.getTeam());
@@ -74,12 +75,13 @@ public class CalculateGroupStandingsTest {
         matches.add(new Match(team1, team2, "21-3", "21-23", "12-21", false, false, 0, 0));
 
         Group group = BuilderUtils.buildGroup(matches, team1, team2);
-
+        calc.addCalculations(group);
+        
         assertEquals(team2, group.getStandings().get(0).getTeam());
         assertEquals(team1, group.getStandings().get(1).getTeam());
     }
 
-    @Test
+	@Test
     public void team3HasMorePoints_isFirst() {
         Team team1 = new Team();
         Team team2 = new Team();
@@ -90,7 +92,8 @@ public class CalculateGroupStandingsTest {
         matches.add(new Match(team2, team3, "21-3", "21-23", "12-21", false, false, 0, 0));
 
         Group group = BuilderUtils.buildGroup(matches, team1, team2, team3);
-
+        calc.addCalculations(group);
+        
         assertEquals(team3, group.getStandings().get(0).getTeam());
         assertEquals(team2, group.getStandings().get(1).getTeam());
         assertEquals(team1, group.getStandings().get(2).getTeam());
@@ -157,6 +160,7 @@ public class CalculateGroupStandingsTest {
         matches.add(new Match(team1, team2, null, null, null, false, false, 0, 0));
 
         Group group = BuilderUtils.buildGroup(matches, team1, team2);
+        calc.addCalculations(group);
 
         assertEquals(0, group.getStandings().get(0).getMatchesFor());
         assertEquals(0, group.getStandings().get(1).getMatchesFor());
@@ -313,10 +317,13 @@ public class CalculateGroupStandingsTest {
     }
 
     private List<Team> getTeamStandings(Group group) {
-        List<Team> result = new ArrayList<>();
+    	calc.addCalculations(group);
+
+    	List<Team> result = new ArrayList<>();
         for (Standing s : group.getStandings()) {
             result.add(s.getTeam());
         }
+        
         return result;
     }
 
