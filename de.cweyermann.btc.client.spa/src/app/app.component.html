@@ -17,7 +17,7 @@
 					data-toggle="dropdown" href="">Disziplinen<span class="caret"></span></a>
 					<ul class="dropdown-menu" (click)="toggleCollapse()"
 						aria-expanded="false">
-						<li *ngFor='let x of disciplines.idNames'><a routerLink="/groups/{{x.id}}">{{x.name}}</a></li>
+						<li *ngFor='let x of disciplines.idNames'><a class='kinda-link' (click)="changeRoute(x.id)">{{x.name}}</a></li>
 					</ul></li>
 				<li><a routerLink="/matches" (click)="toggleCollapse()"
 					aria-expanded="false">Spielplan</a></li>
