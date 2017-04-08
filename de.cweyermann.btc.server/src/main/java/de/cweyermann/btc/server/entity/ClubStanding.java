@@ -2,24 +2,39 @@ package de.cweyermann.btc.server.entity;
 
 public class ClubStanding extends AbstractEntity {
 
-	private String clubName;
+    private int position;
 
-	private double points = 0;
+    private String clubName;
 
-	public String getClubName() {
-		return clubName;
-	}
+    private double points = 0;
 
-	public void setClubName(String clubName) {
-		this.clubName = clubName;
-	}
+    public String getClubName() {
+        return clubName;
+    }
 
-	public double getPoints() {
-		return points;
-	}
+    public void setClubName(String clubName) {
+        this.clubName = clubName;
+    }
 
-	public void addPoints(double points) {
-		this.points += points;
-	}
+    public double getPoints() {
+        return points;
+    }
+
+    public void addPoints(double points) {
+        this.points += points;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+    
+    @Override
+    public String toString() {
+    	return clubName + "(" + points + ")";
+    }
 
 }

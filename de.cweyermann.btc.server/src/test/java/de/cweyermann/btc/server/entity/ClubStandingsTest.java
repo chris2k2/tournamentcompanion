@@ -8,31 +8,51 @@ import org.junit.Test;
 
 public class ClubStandingsTest {
 
-	@Test
-	public void standingsAdded_comeOutSorted() {
-		ClubStandings standings = new ClubStandings();
-		ClubStanding standing = new ClubStanding();
-		standing.addPoints(123);
-		ClubStanding standing2 = new ClubStanding();
-		standing2.addPoints(1);
-		
-		standings.addStandings(standing2);
-		standings.addStandings(standing);
-		
-		assertEquals(Arrays.asList(standing, standing2), standings.getStandings());
-	}
+    @Test
+    public void standingsAdded_comeOutSorted() {
+        ClubStandings standings = new ClubStandings();
+        ClubStanding standing = new ClubStanding();
+        standing.addPoints(123);
+        ClubStanding standing2 = new ClubStanding();
+        standing2.addPoints(1);
 
-	@Test
-	public void standingsAddedDouble_comeOutSorted() {
-		ClubStandings standings = new ClubStandings();
-		ClubStanding standing = new ClubStanding();
-		standing.addPoints(5.1);
-		ClubStanding standing2 = new ClubStanding();
-		standing2.addPoints(5);
-		
-		standings.addStandings(standing2);
-		standings.addStandings(standing);
-		
-		assertEquals(Arrays.asList(standing, standing2), standings.getStandings());
-	}
+        standings.addStandings(standing2);
+        standings.addStandings(standing);
+
+        assertEquals(Arrays.asList(standing, standing2), standings.getStandings());
+    }
+
+    @Test
+    public void standingsAddedDouble_comeOutSorted() {
+        ClubStandings standings = new ClubStandings();
+        ClubStanding standing = new ClubStanding();
+        standing.addPoints(5.1);
+        ClubStanding standing2 = new ClubStanding();
+        standing2.addPoints(5);
+
+        standings.addStandings(standing2);
+        standings.addStandings(standing);
+
+        assertEquals(Arrays.asList(standing, standing2), standings.getStandings());
+        assertEquals(1, standing.getPosition());
+        assertEquals(2, standing2.getPosition());
+    }
+    
+
+    @Test
+    public void standingsEqual_positionEqual() {
+        ClubStandings standings = new ClubStandings();
+        ClubStanding standing = new ClubStanding();
+        standing.addPoints(5);
+        ClubStanding standing2 = new ClubStanding();
+        standing2.addPoints(5.0000001);
+
+        standings.addStandings(standing2);
+        standings.addStandings(standing);
+
+        standings.getStandings();
+        
+        assertEquals(1, standing.getPosition());
+        assertEquals(1, standing2.getPosition());
+    }
 }

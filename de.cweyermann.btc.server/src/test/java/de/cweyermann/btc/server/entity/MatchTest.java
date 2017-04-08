@@ -5,6 +5,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.Test;
 
 public class MatchTest {
@@ -126,6 +130,115 @@ public class MatchTest {
 
 		assertNull(m.getWinner());
 		assertNull(m.getLooser());
+	}
+
+	@Test
+	public void getLooser_worksWithNull() {
+		Match m = new Match(new Team(), null, "21-0", null, null, false, false, 1, 1);
+
+		assertNull(m.getLooser());
+	}
+
+	@Test
+	public void simpleTeam_teamNameIsBuiltCorrectly() {
+		Player p1 = new Player();
+		p1.setSurname("first");
+		Player p2 = new Player();
+		p2.setSurname("second");
+
+		Team t1 = new Team();
+		t1.setPlayer1(p1);
+		t1.setPlayer2(p2);
+
+		Team t2 = new Team();
+		t2.setPlayer1(p1);
+		t2.setPlayer2(p2);
+
+		Match m = new Match();
+		m.setTeam1(t1);
+		m.setTeam2(t2);
+
+		assertEquals("first/second - first/second", m.getMatchString());
+	}
+
+	@Test
+	public void simpleTeamSingles_teamNameIsBuiltCorrectly() {
+		Player p1 = new Player();
+		p1.setSurname("first");
+		Player p2 = new Player();
+		p2.setSurname("second");
+
+		Team t1 = new Team();
+		t1.setPlayer1(p1);
+		t1.setPlayer2(p2);
+
+		Match m = new Match();
+		m.setTeam1(t1);
+
+		assertEquals("first/second - <Bye>", m.getMatchString());
+	}
+
+	@Test
+	public void noTeams_allUnknown() {
+		Match m = new Match();
+
+		assertEquals("<Bye> - <Bye>", m.getMatchString());
+	}
+
+	@Test
+	public void noSet_correctlyBuilt() {
+		assertResult("", null, null, null);
+	}
+
+	@Test
+	public void oneSet_correctlyBuilt() {
+		assertResult("21-12", "21-12", null, null);
+	}
+
+	@Test
+	public void twoSets_correctlyBuilt() {
+		assertResult("21-12 21-8", "21-12", "21-8", null);
+	}
+
+	@Test
+	public void threeSets_correctlyBuilt() {
+		assertResult("21-12 21-8 21-21", "21-12", "21-8", "21-21");
+	}
+
+	@Test
+	public void dateGiven_correctlyFormatted() throws ParseException {
+		Match m = new Match();
+		m.setDate(new SimpleDateFormat("dd.MM.yyyy HH:mm").parse("10.10.2017 09:00"));
+
+		assertEquals("10.10 09:00", m.getDate());
+	}
+
+	@Test
+	public void wayInThePast_NotPlayed() throws ParseException {
+		Match m = new Match();
+		m.setDate(new Date(0));
+
+		assertEquals("<Kein Spiel>", m.getDate());
+	}
+
+	@Test
+	public void dateNotGivenempty() {
+		Match m = new Match();
+
+		assertEquals("", m.getDate());
+	}
+
+	private void assertResult(String expected, String set1, String set2, String set3) {
+		Match m = new Match();
+		m.setSet1(set1);
+		m.setSet2(set2);
+		m.setSet3(set3);
+		assertEquals(expected, m.getResult());
+	}
+
+	@Test
+	public void teamWithNoPlayers_teamNameIsBuiltCorrectly() {
+		assertEquals("", new Team().getTeamname());
 	}
 
 	private Match play(String set1, String set2, String set3) {

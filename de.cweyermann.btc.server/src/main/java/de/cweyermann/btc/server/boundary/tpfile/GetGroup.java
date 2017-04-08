@@ -13,7 +13,7 @@ import de.cweyermann.btc.server.entity.Team;
 
 public class GetGroup extends AbstractTpFileControl {
 
-	private static final int KO_TYPE = 1;
+	public static final int KO_TYPE = 1;
 	private Map<Integer, Team> teamById = new HashMap<>();
 
 	public GetGroup(Connection filePath) {
@@ -40,8 +40,8 @@ public class GetGroup extends AbstractTpFileControl {
 				+ "FROM	PlayerMatch thematch INNER JOIN PlayerMatch AS hometeam ON thematch.van1 = hometeam.planning "
 				+ "INNER JOIN PlayerMatch AS awayteam ON thematch.van2 = awayteam.planning "
 				+ "INNER JOIN Draw ON draw.id = thematch.draw WHERE draw.id = " + id + " "
-				+ "AND thematch.draw = hometeam.draw AND thematch.draw = awayteam.draw "
-				+ "AND reversehomeaway=FALSE;");
+				+ "AND thematch.draw = hometeam.draw AND thematch.draw = awayteam.draw " + "AND thematch.roundnr>0 "
+				+ "AND reversehomeaway=FALSE " + "ORDER BY thematch.roundnr, thematch.matchnr;");
 
 		try {
 			convertMatches(group, resultSet);
@@ -68,7 +68,9 @@ public class GetGroup extends AbstractTpFileControl {
 			group.setQualification(rs.getBoolean(16));
 			group.setName(rs.getString(11));
 
-			group.addMatch(match);
+			if (group.isKo() || (match.getTeam1() != null && match.getTeam2() != null)) {
+				group.addMatch(match);
+			}
 		}
 	}
 

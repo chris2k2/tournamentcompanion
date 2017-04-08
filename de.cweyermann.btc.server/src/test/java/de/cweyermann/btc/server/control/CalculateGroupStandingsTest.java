@@ -10,8 +10,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.cweyermann.btc.server.boundary.tpfile.GetGroup;
+import de.cweyermann.btc.server.boundary.tpfile.TpFileUtils;
 import de.cweyermann.btc.server.entity.Group;
+import de.cweyermann.btc.server.entity.KoRound;
 import de.cweyermann.btc.server.entity.Match;
+import de.cweyermann.btc.server.entity.Player;
 import de.cweyermann.btc.server.entity.Standing;
 import de.cweyermann.btc.server.entity.Team;
 
@@ -41,6 +45,7 @@ public class CalculateGroupStandingsTest {
 		matches.add(new Match(team1, team2, "21-3", "21-2", null, false, false, 0, 0));
 
 		Group group = BuilderUtils.buildGroup(matches, team1, team2);
+		calc.addCalculations(group);
 
 		List<Standing> standings = group.getStandings();
 		Standing first = standings.get(0);
@@ -72,6 +77,7 @@ public class CalculateGroupStandingsTest {
 		matches.add(new Match(team1, team2, "21-3", "21-23", "12-21", false, false, 0, 0));
 
 		Group group = BuilderUtils.buildGroup(matches, team1, team2);
+		calc.addCalculations(group);
 
 		assertEquals(team2, group.getStandings().get(0).getTeam());
 		assertEquals(team1, group.getStandings().get(1).getTeam());
@@ -88,6 +94,7 @@ public class CalculateGroupStandingsTest {
 		matches.add(new Match(team2, team3, "21-3", "21-23", "12-21", false, false, 0, 0));
 
 		Group group = BuilderUtils.buildGroup(matches, team1, team2, team3);
+		calc.addCalculations(group);
 
 		assertEquals(team3, group.getStandings().get(0).getTeam());
 		assertEquals(team2, group.getStandings().get(1).getTeam());
@@ -155,6 +162,7 @@ public class CalculateGroupStandingsTest {
 		matches.add(new Match(team1, team2, null, null, null, false, false, 0, 0));
 
 		Group group = BuilderUtils.buildGroup(matches, team1, team2);
+		calc.addCalculations(group);
 
 		assertEquals(0, group.getStandings().get(0).getMatchesFor());
 		assertEquals(0, group.getStandings().get(1).getMatchesFor());
@@ -271,9 +279,9 @@ public class CalculateGroupStandingsTest {
 		g.addTeam(team2);
 		g.addMatch(new Match(team1, team2, "0-21", "0-21", null, false, false, 0, 0));
 		g.setKo(true);
-		
+
 		calc.addCalculations(g);
-		
+
 		assertTrue(g.getStandings().isEmpty());
 	}
 
@@ -291,7 +299,12 @@ public class CalculateGroupStandingsTest {
 		Group group = BuilderUtils.buildGroup(matches, team1, team2, team3);
 
 		assertEquals(Arrays.asList(team3, team2, team1), getTeamStandings(group));
+	}
 
+	@Test
+	public void integrationtest() {
+		GetGroup getGroup = new GetGroup(TpFileUtils.getConnection("bigdemo.tp"));
+		calc.addCalculations(getGroup.get(1));
 	}
 
 	private List<Match> buildDoubleDraw(Team team1, Team team2, Team team3, Team team4) {
@@ -306,12 +319,14 @@ public class CalculateGroupStandingsTest {
 	}
 
 	private List<Team> getTeamStandings(Group group) {
+		calc.addCalculations(group);
+
 		List<Team> result = new ArrayList<>();
 		for (Standing s : group.getStandings()) {
 			result.add(s.getTeam());
 		}
+
 		return result;
 	}
-
 
 }

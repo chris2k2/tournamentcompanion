@@ -3,12 +3,10 @@ package de.cweyermann.btc.server.control;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import de.cweyermann.btc.server.entity.ClubStanding;
 import de.cweyermann.btc.server.entity.ClubStandings;
 import de.cweyermann.btc.server.entity.Group;
 import de.cweyermann.btc.server.entity.Match;
@@ -21,7 +19,7 @@ public class CalculateClubStandingsTest {
 
     @Before
     public void init() {
-        calc = new CalculateClubStandings(10, 6, 4, 2, 1);
+        calc = new CalculateClubStandings(10, 6, 4, 2, 1, new CalculateGroupStandings());
     }
 
     @Test
@@ -126,9 +124,9 @@ public class CalculateClubStandingsTest {
         Team team4 = buildTeamFrom("Fourth");
 
         Group group = new Group();
+        group.addMatch(new Match(team1, team2, "21-3", "21-0", null, false, false, 0, 1));
         group.addMatch(new Match(team1, team3, "21-1", "21-0", null, false, false, 0, 0));
         group.addMatch(new Match(team2, team4, "21-2", "21-0", null, false, false, 1, 0));
-        group.addMatch(new Match(team1, team2, "21-3", "21-0", null, false, false, 0, 1));
         group.addTeam(team1);
         group.addTeam(team2);
         group.addTeam(team3);
@@ -177,29 +175,6 @@ public class CalculateClubStandingsTest {
         ClubStandings standings = calc.execute(Arrays.asList(group));
 
         assertNoPoints(standings, 0);
-    }
-
-    @Test
-    public void finalNotPlayedButHfandThird_thirdAndfourthAreRanked1And2() {
-        Team team1 = buildTeamFrom("Winner");
-        Team team2 = buildTeamFrom("Second");
-        Team team3 = buildTeamFrom("Third");
-        Team team4 = buildTeamFrom("Fourth");
-        Group group1 = new Group();
-        group1.addMatch(new Match(team1, team3, "21-0", "21-2", null, false, false, 0, 0));
-        group1.addMatch(new Match(team2, team4, "21-0", "21-3", null, false, false, 1, 0));
-        group1.addMatch(new Match(team1, team2, null, null, null, false, false, 0, 1));
-        group1.addMatch(new Match(team3, team4, "21-5", "21-5", null, false, false, 1, 1));
-        group1.addTeam(team1);
-        group1.addTeam(team2);
-        group1.addTeam(team3);
-        group1.addTeam(team4);
-        makeFinalKo(group1);
-
-        ClubStandings standings = calc.execute(Arrays.asList(group1));
-
-        assertEquals(4, standings.getStandings().get(0).getPoints(), 0.001);
-        assertEquals(2, standings.getStandings().get(1).getPoints(), 0.001);
     }
 
     @Test
@@ -282,8 +257,8 @@ public class CalculateClubStandingsTest {
         if (finalPlayed) {
             group.addMatch(new Match(team1, team3, "21-1", "21-0", null, false, false, 0, 0));
             group.addMatch(new Match(team2, team4, "21-2", "21-0", null, false, false, 1, 0));
-            group.addMatch(new Match(team1, team2, "21-3", "21-0", null, false, false, 0, 1));
-            group.addMatch(new Match(team3, team4, "21-4", "21-0", null, false, false, 1, 1));
+            group.addMatch(new Match(team3, team4, "21-4", "21-0", null, false, false, 0, 1));
+            group.addMatch(new Match(team1, team2, "21-3", "21-0", null, false, false, 1, 1));
         } else {
             group.addMatch(new Match(team1, team3, null, null, null, false, false, 0, 0));
             group.addMatch(new Match(team2, team4, null, null, null, false, false, 1, 0));
@@ -306,6 +281,7 @@ public class CalculateClubStandingsTest {
     private Team buildTeamFrom(String club) {
         Team team1 = new Team();
         Player player1 = new Player();
+        player1.setSurname(club);
         team1.setPlayer1(player1);
         player1.setClub(club);
         return team1;

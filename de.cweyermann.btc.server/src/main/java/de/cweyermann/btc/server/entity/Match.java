@@ -1,9 +1,22 @@
 package de.cweyermann.btc.server.entity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Match extends AbstractEntity {
+
+	public static final SimpleDateFormat FORMAT = new SimpleDateFormat("dd.MM HH:mm");
+
+	private static final String UNKNOWN = "<Bye>";
+
+	private static final Date MINDATE = new Date(946681200000L); // 1.1.2000
+																	// 0:00
+
+	private static final String NOMATCH = "<Kein Spiel>";
 
 	private final static Pattern PATTERN = Pattern.compile("(\\d+)[-](\\d+)");
 
@@ -24,6 +37,8 @@ public class Match extends AbstractEntity {
 	private int matchnr;
 
 	private int roundnr;
+
+	private Date date;
 
 	public Match() {
 
@@ -100,7 +115,7 @@ public class Match extends AbstractEntity {
 	private int getPoints(Team team, String set) {
 		int result = 0;
 
-		if (set != null) {
+		if (set != null && team != null) {
 			Matcher matcher = PATTERN.matcher(set);
 			matcher.matches();
 			int p1points = Integer.parseInt(matcher.group(1));
@@ -130,6 +145,23 @@ public class Match extends AbstractEntity {
 
 	public String getSet3() {
 		return set3;
+	}
+
+	public String getResult() {
+		String result = "";
+
+		result = appendSet(result, set1);
+		result = appendSet(result, set2);
+		result = appendSet(result, set3);
+
+		return result.trim();
+	}
+
+	private String appendSet(String result, String set) {
+		if (!StringUtils.isEmpty(set)) {
+			result += set + " ";
+		}
+		return result;
 	}
 
 	public int getSets(Team team) {
@@ -222,8 +254,54 @@ public class Match extends AbstractEntity {
 		this.walkoverTeam2 = walkoverTeam2;
 	}
 
+	public String getMatchString() {
+		String teamName = "";
+
+		if (team1 != null) {
+			teamName += team1.getTeamname();
+		} else {
+			teamName += UNKNOWN;
+		}
+
+		if (team2 != null) {
+			teamName += " - " + team2.getTeamname();
+		} else {
+			teamName += " - " + UNKNOWN;
+		}
+
+		return teamName;
+	}
+
+	public String getDate() {
+		String result = "";
+
+		if (date != null) {
+			result = FORMAT.format(date);
+		}
+
+		if (date != null && date.before(MINDATE)) {
+			result = NOMATCH;
+		}
+
+		return result;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	@Override
 	public String toString() {
-		return team1 + " vs. " + team2 + " " + set1 + " " + set2 + " " + set3;
+		String teamname1 = "<null>";
+		String teamname2 = "<null>";
+		if (team1 != null) {
+			teamname1 = team1.getTeamname();
+		}
+
+		if (team2 != null) {
+			teamname2 = team2.getTeamname();
+		}
+		
+		return teamname1 + " vs. " + teamname2 + " " + getResult();
 	}
 }

@@ -20,6 +20,8 @@ public class Group extends AbstractEntryWithId {
 
 	private List<Team> teams = new ArrayList<>();
 
+	private List<KoRound> rounds = new ArrayList<>();
+	
 	private int position;
 
 	private boolean qualification;
@@ -87,5 +89,13 @@ public class Group extends AbstractEntryWithId {
 
 	public void setQualification(boolean isQuali) {
 		this.qualification = isQuali;
+	}
+
+	public List<KoRound> getKoRounds() {
+		return rounds;
+	}
+
+	public void addRound(KoRound round) {
+		this.rounds.add(round);
 	}
 }

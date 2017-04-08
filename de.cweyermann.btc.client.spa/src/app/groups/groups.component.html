@@ -1,0 +1,64 @@
+
+<article>
+	<section *ngFor='let group of disc.groups'>
+		<div *ngIf='!group.ko'>
+			<section>
+				<h2>{{group.name}}</h2>
+				<table class="table table-striped" *ngIf='!group.ko'>
+					<tr>
+						<th>#</th>
+						<th>Team</th>
+						<th>Spiele</th>
+						<th>Sätze</th>
+						<th>Punkte</th>
+					</tr>
+					<tr *ngFor='let standing of group.standings'>
+						<td>{{standing.ranking}}.</td>
+						<td>{{standing.team.teamname}}</td>
+						<td>{{standing.matchesFor}}:{{standing.matchesAgainst}}</td>
+						<td>{{standing.setsFor}}:{{standing.setsAgainst}}</td>
+						<td>{{standing.pointsFor}}:{{standing.pointsAgainst}}</td>
+					</tr>
+				</table>
+			</section>
+			<a class="btn collapsed" data-toggle="collapse"
+				[attr.data-target]="'#games' + group.id" aria-expanded="true">&raquo;
+				Alle Spiele </a>
+			<section id='games{{group.id}}' class="collapse"
+				aria-expanded="false">
+				<table class="table table-striped">
+					<tr>
+						<th>Spiel</th>
+						<th>Ergebnis</th>
+					</tr>
+					<tr *ngFor='let m of group.matches'>
+						<td>{{m.matchString}}</td>
+						<td>{{m.result}}</td>
+					</tr>
+				</table>
+			</section>
+		</div>
+		<div *ngIf='group.ko'>
+			<h2>{{group.name}}</h2>
+			<a class="btn collapsed" data-toggle="collapse"
+				[attr.data-target]="'#games' + group.id" aria-expanded="true">&raquo;
+				Alle Spiele </a>
+			<section id='games{{group.id}}' class="collapse"
+				aria-expanded="false">
+				<div *ngFor='let koround of group.koRounds'>
+					<h3>{{koround.name}}</h3>
+					<table class="table table-striped">
+						<tr>
+							<th>Spiel</th>
+							<th>Ergebnis</th>
+						</tr>
+						<tr *ngFor='let m of koround.matches'>
+							<td>{{m.matchString}}</td>
+							<td>{{m.result}}</td>
+						</tr>
+					</table>
+				</div>
+			</section>
+		</div>
+	</section>
+</article>

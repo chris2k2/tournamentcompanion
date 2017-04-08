@@ -242,5 +242,4 @@ public class CalculateGroupStandings {
 
 		return result;
 	}
-
 }
