@@ -1,10 +1,12 @@
 <section id="allgames">
 	<table class="table table-striped">
 		<tr>
+			<th>Uhrzeit</th>
 			<th>Spiel</th>
 			<th>Ergebnis</th>
 		</tr>
 		<tr *ngFor='let m of matches.matches'>
+			<td>{{m.date}}</td>
 			<td>{{m.matchString}}</td>
 			<td>{{m.result}}</td>
 		</tr>
