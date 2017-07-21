@@ -12,7 +12,7 @@ import { IMatches } from './matches/imatches';
 @Injectable()
 export class BackendService {
 
-  private url = 'http://localhost:8082/btc/';  // URL to web API
+  private url = 'http://192.168.2.108:8082/btc/';  // URL to web API
 
   constructor(private http: Http) { }
 
