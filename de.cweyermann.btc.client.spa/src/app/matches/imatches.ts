@@ -5,4 +5,5 @@ export interface IMatches {
 export interface IMatch {
   'matchString': string;
   'result': string;
+  'date': string;
 }

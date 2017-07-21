@@ -1,4 +1,6 @@
 import { BackendService } from '../backend.service';
+import { IDiscipline } from '../idisciplines';
+import { IGroup } from '../igroup';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -9,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GroupsComponent implements OnInit {
 
-  disc: Object;
+  disc: IDiscipline;
   id: number;
 
   constructor(private beService: BackendService, private route: ActivatedRoute) {

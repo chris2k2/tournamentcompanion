@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 
 import { IClubStandings } from './clubstandings/iclubstandings';
-import { IDisciplines } from './idisciplines';
+import { IDisciplines, IDiscipline } from './idisciplines';
 import { IMatches } from './matches/imatches';
 
 @Injectable()
@@ -37,7 +37,7 @@ export class BackendService {
       .catch(this.handleError);
   }
 
-  getDiscipline(id: number): Observable<Object> {
+  getDiscipline(id: number): Observable<IDiscipline> {
     return this.http.get(this.url + 'disciplines/' + id)
       .map((response: Response) => <Object>response.json())
       .do(response => console.log(JSON.stringify(response)))
