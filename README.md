@@ -17,5 +17,9 @@ The Tournament Companion consists of two parts:
 * Companion Server: It's task is to provide an interface for the app to get all the data. It parses the Tournament Planner file and provides services for the Companion Client. The Server runs on the same machine as the Tournament Planner. The address of this machine is configured in the Client. Thus it should run some sort of DynDNS. 
 * Companion Client: The client is a app (Windows Phone, iOs or Android) which shows the information. It is built via Phonefactor. This allows to have the App be generated from general purpose web code
 
+## How to start
+There is an architecture documentation in doc/. Start there. Then clone the projects you like and start contributing :)
+
+
 ## Important Announcement
 This is a fun project! This means I choose technologies because they seem to be cool, not because they match the requirements :) If you want to contribute, just kepp in mind: Why so serious? ;)
