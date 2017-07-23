@@ -1,0 +1,19 @@
+[[section-solution-strategy]]
+== Solution Strategy
+
+The general idea is to have an server access the database of the Tournament Planner, while the frontend only talks to the backend. 
+
+[#img-strategy]
+[caption="Figure 1: the general strategy"]
+image::strategy.png[Strategy,500,500]
+
+In this way the only critical point is the database of the Tournament Planner. Otherwise the app is completely autarc. 
+
+* TDD: The backend is developed using Testdriven Development. An high percentage of unit tests, especially for the calcuation is crucial
+* Bulk Answers: The server only answers with full context. This allows the client to keep the amount of requests minimal.
+* Caching: The Server tells the client to cache the answers for 10s. This prevents the massive F5 usage. The server uses HTTP Caching Headers for that.
+* BCE-Pattern: To separate concerns as good as possible the BCE (Boundary-Control-Entity) Pattern is used at the server
+* Dumb Frontend: Everything is done at the backend. This will keep complexity at the backend, where it is well tested and managable.
+* Hybrid app: Since this is a quite simple use case an hybrid app approach has been chosen.
+
+

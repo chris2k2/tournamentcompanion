@@ -1,0 +1,37 @@
+[[section-building-block-view]]
+== Building Block View
+
+This chapter describes how everything is built together. It does not describe where something is deployed.
+
+[#img-overview]
+[caption="Figure 2: the system overview"]
+image::buildingblock1.png[overview,500,500]
+
+The system is separated into two building blocks. The client (de.cweyermann.btc.client.spa) and the server (de.cweyermann.btc.server). The client
+is written in Typescript and builds strongly on the Angular Framework. Whereas the server is build with Java and builds strongly on the VertX framework.
+
+=== Client
+The client is simple, as it is dumb. It only shows the results the backend server calculated.
+
+[#img-bb-client]
+[caption="Figure 3: Client Overview"]
+image::bb-client.png[bb-client,500,500]
+
+The client has a main page, which links to all the subpages, which are in their own folders. This does nothing more, than linking to all the subcomponents and the
+styling. For this Bootstrap is used. The default component is "welcome", which shows a nice welcome text. All components use a backend service, which is responsile
+for communicating with the server. 
+
+=== Server
+The server implements all the logic and the access to the Database. A microservice-like approach is chosen. This means the components can run independetly from another. The only shared code is in the control, which has certain calucation logic, 
+like Group Standings etc. 
+
+[#img-bb-server]
+[caption="Figure 4: Server Overview"]
+image::bb-server1.png[bb-server,500,500]
+
+Each component consists of:
+* Tp File Access: Access to the TP File. This file is the data backend of the Tournament Planner. Indeed it is an Access MDB file. Therefore the ucanaccess JDBC driver is used. 
+* Control: These are stateless, calculation objects. They can be instantiated copied, cloned and will simply perform certain math jobs.
+* REST Layer: This is the presentation layer it gives out entities, which are serialized via the VertX Json Controller. 
+
+All this is wired together by Startup.java. As all is built to be independet, it could be easily distributed to several machines. 

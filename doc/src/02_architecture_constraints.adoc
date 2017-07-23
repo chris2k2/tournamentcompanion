@@ -1,0 +1,6 @@
+[[section-architecture-constraints]]
+== Architecture Constraints
+
+As a frontend service Angular is set, at the backend a Microservice approach should be used. 
+
+
