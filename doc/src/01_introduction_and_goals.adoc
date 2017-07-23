@@ -1,0 +1,44 @@
+[[section-introduction-and-goals]]
+== Introduction and Goals
+This project has two main purposes. On the one hand it should provide support for Badminton Tournaments, on the other hand it should
+serve as a playing ground for new technologies. 
+
+Badminton Tournaments often face the struggle, that players come to the tournament booth regulary and ask for the standings. Thus an organizer has
+to have more people on the booth to answer this questions. Thus live scoring would be very benefitial. For the beginning of the project the project
+only needs to support the "Zirndorfer Stadtmeisterschaft" in the future it should be generic, to be also used by other clubs for their tournament.  
+The app is used by players at the tournament. It is is not intended to follow the tournament from home. 
+
+The other point is, that as a software architect you need to have your hands on the latest technologies. There are two options, either you do Katas all
+the time (Roman Numbers, Bowling Scoring etc.) or you do one project. This will lead to a mix of technologies in this project, which is desired.
+
+
+=== Requirements Overview
+In this section only the domain requirements are shown:
+
+* Overview of the Standings of the groups
+* Overview of the current schedule
+* Overview of the current club standings ranking
+
+Furthermore there are some non-functional requirements:
+* The Quality goals must be reached
+* The app should run without having to be in a specific WIFI.
+
+=== Quality Goals
+This section describes what quality should be achieved. Since the app is only used as an "companion" the goals are soft. 
+
+* Performance: The app will be used 99% while the tournament is held. It is expected that people will hit on that F5 key... A regular tournament has around 100 players,
+whereas around 50 are expected to use the app. Since most Badminton courts are out of town, only a 4G connection can be expected. Thus the app must be 
+able to withstand ca. 50 Requests/s via a 4G line. This makes the maximum response time 20ms.
+
+* Quality: the app may fail in certain parts, which would be ok. However, the club ranking and the club standings must be accurate... Otherwise riots are expected...
+
+* Isolation: under no circumstances must the app influence the organization of the tournament. If the app crashes, fails, does miscalucations etc. it must not interfere
+with the program used to organize the tournament (usually Tournament Companion).
+
+=== Stakeholders
+This sections lists all the stakeholders and their interests:
+
+* TSV Zirndorf: To have an app for their tournament AND to have a generic app to offer to other clubs
+* Christian: To try out latest technologies
+* Mario: Learn some Angular
+

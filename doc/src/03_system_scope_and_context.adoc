@@ -1,0 +1,11 @@
+[[section-system-scope-and-context]]
+== System Scope and Context
+
+The communication partners are:
+
+|=======
+|Tournament Planner| The results must be read from the Tournament Planner, since this tool is used for organizing the event. This is a read-only direction.
+|Play Store| The app will be distributed via the Play Store. So it must comply to all constraints given. This is a provide-only direction.
+|=======
+
+The communication partners have been kept minimal in order to avoid complexity.

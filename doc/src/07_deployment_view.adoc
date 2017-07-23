@@ -1,0 +1,21 @@
+[[section-deployment-view]]
+== Deployment View
+
+This shows the typical deployment of the client and server at a tournament
+
+[#img-deployment]
+[caption="Figure 2: typical deployment"]
+image::deployment.png
+
+The components are:
+* Branded Tournament Companion App: The client (de.cweyermann.btc.client.spa) must be build into an Android app. This can be done
+via Apache Cordova. Welcome texts, name, icons must be adapted and the server name (see component DyDNS Program) must be filled in.
+
+* 4G Router: Since the app should run without any wifi, the server needs to be available via the Internet
+
+* DyDNS program: Since the app is published in the store before the tournament the IP of the laptop is not known yet. Therefore
+a DyDNS program should be used. It provides a name, which can be configured in the Branded Tournament Companion App, instead of an IP.
+
+* Tournament Planner: External program to organize the tournament
+
+* Tournament Companion Server: the server which provides the results. Has a configuration file which must be adapted
