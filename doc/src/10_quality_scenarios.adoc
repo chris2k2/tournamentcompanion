@@ -1,13 +1,4 @@
 [[section-quality-scenarios]]
 == Quality Requirements
-
-
-
-
-=== Quality Tree
-
-
-
-=== Quality Scenarios
-
+This chapter should describe how the Quality is assured. Besides intensive testing nothing has been done here, up to now.
 

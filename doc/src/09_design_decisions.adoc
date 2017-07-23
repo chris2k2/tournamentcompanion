@@ -1,5 +1,12 @@
 [[section-design-decisions]]
 == Design Decisions
+Here are some design decisions documented. This should help other contributers to understand why it is built like this:
 
+* Native App vs. Hybrid App: The App starts very simple. It should only display some results. All the logic has been developed in the backend. Thus
+the app must just issue some REST calls and print themn. Since, initialy more platforms should have been supported a hybrid app approach has been chosen.
 
+* Angular vs. other frameworks: Angullar has been the number 1 javascript framework at that time. Furthermore the inital author has some experience with it
+and wants to build on that.
 
+* Nuliga approach: This is a domain thing. The Badminton Community Mittelfranken (where the project origins) switched to Nuliga. However this has been AFTER
+this project started (but before documentation...). So this is not taken into account

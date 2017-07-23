@@ -1,5 +1,10 @@
 [[section-technical-risks]]
 == Risks and Technical Debts
 
+=== Risks
+The frameworks might not be up-to-date or cool anymore. Then an migration has to be done. Counter measure: just do it :-) since this is the purpose of the project, too.
+
+=== Technical Debts
+* The frameworks must be updated (still on Angular2)
 
 

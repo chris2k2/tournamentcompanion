@@ -2,10 +2,9 @@
 == Deployment View
 
 This shows the typical deployment of the client and server at a tournament
-
 [#img-deployment]
 [caption="Figure 2: typical deployment"]
-image::deployment.png
+image::deployment.png[deployment,500,500]
 
 The components are:
 * Branded Tournament Companion App: The client (de.cweyermann.btc.client.spa) must be build into an Android app. This can be done

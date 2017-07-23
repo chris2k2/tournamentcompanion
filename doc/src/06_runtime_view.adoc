@@ -5,6 +5,6 @@ dispatches it to the correct component by itself and the component will access t
 
 [#img-runtime]
 [caption="Figure 5: The current lifecycle of a request"]
-image::runtime.png
+image::runtime.png[runtime,500,500]
 
 There is a caching layer between the component and the server, which might make it unneccessary to go to the server and thus to the Tp File.

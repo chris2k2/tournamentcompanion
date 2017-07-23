@@ -1,22 +1,3 @@
 [[section-concepts]]
 == Cross-cutting Concepts
-
-
-
-
-
-=== _<Concept 1>_
-
-_<explanation>_
-
-
-
-=== _<Concept 2>_
-
-_<explanation>_
-
-...
-
-=== _<Concept n>_
-
-_<explanation>_
+This chapter should describe some concepts which are widely adapted in the project. 

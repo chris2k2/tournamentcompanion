@@ -5,7 +5,7 @@ The general idea is to have an server access the database of the Tournament Plan
 
 [#img-strategy]
 [caption="Figure 1: the general strategy"]
-image::strategy.png
+image::strategy.png[Strategy,500,500]
 
 In this way the only critical point is the database of the Tournament Planner. Otherwise the app is completely autarc. 
 
