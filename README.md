@@ -18,7 +18,7 @@ The Tournament Companion consists of two parts:
 * Companion Client: The client is a app (Windows Phone, iOs or Android) which shows the information. It is built via Phonefactor. This allows to have the App be generated from general purpose web code
 
 ## How to start
-There is an architecture documentation in doc/. Start there. Then clone the projects you like and start contributing :)
+There is an architecture documentation in doc/. Start there. Then you can read the bunch of .md files in the main folder. There is the process described and everything you need to know. Then you simply clone the project you like and start contributing :)
 
 
 ## Important Announcement
