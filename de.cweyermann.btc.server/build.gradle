@@ -25,6 +25,11 @@ dependencies {
     testCompile 'org.assertj:assertj-core:2.0.0'
 }
 
+task copybuildresources(type:Copy) {
+	from 'buildresources'
+	into 'release'
+}
+
 task fatJar(type: Jar) {
 	manifest {
         attributes 'Implementation-Title': 'Badminton Tournament Companion Server',
@@ -35,3 +40,14 @@ task fatJar(type: Jar) {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
+
+task release(type: Copy) {
+	from('build/libs') {
+		include '*-all.jar'
+	}
+	into 'release'
+}
+
+release.dependsOn build
+release.dependsOn fatJar
+release.dependsOn copybuildresources
