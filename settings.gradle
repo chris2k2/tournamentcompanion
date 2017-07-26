@@ -9,7 +9,7 @@
  * in the user guide at https://docs.gradle.org/2.13/userguide/multi_project_builds.html
  */
 
-include 'de.cweyermann.btc.server', 'de.cweyermann.btc.client.spa'
+include 'de.cweyermann.btc.server',  'de.cweyermann.btc.client.spa', 'doc'
 
 rootProject.name = 'de.cweyermann.btc.parent'
 

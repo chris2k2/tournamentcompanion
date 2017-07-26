@@ -1,10 +1,38 @@
+plugins {
+    id 'org.asciidoctor.convert' version '1.5.3'
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'org.asciidoctor.convert'
 
 repositories {
     jcenter()
 }
 
-release {
-
+asciidoctor {
+	sourceDir = file('doc/')
+	sources {
+		include 'architecturedoc.adoc'
+	}		
+	outputDir = file('release')
 }
+
+task releaseSpa(type: Copy) {
+	from('de.cweyermann.btc.client.spa/release')
+	into 'release/app'
+}
+
+task releaseServer(type: Copy) {
+	from('de.cweyermann.btc.server/release')
+	into 'release/server'
+}
+
+task release {
+}
+
+release.dependsOn releaseServer
+release.dependsOn releaseSpa
+release.dependsOn asciidoctor
+releaseServer.dependsOn 'de.cweyermann.btc.server:release'
+releaseSpa.dependsOn 'de.cweyermann.btc.client.spa:release'
