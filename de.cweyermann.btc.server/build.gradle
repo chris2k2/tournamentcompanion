@@ -23,5 +23,15 @@ dependencies {
     testCompile 'io.vertx:vertx-unit:3.2.1'
     testCompile 'com.jayway.restassured:rest-assured:2.4.0'
     testCompile 'org.assertj:assertj-core:2.0.0'
+}
 
+task fatJar(type: Jar) {
+	manifest {
+        attributes 'Implementation-Title': 'Badminton Tournament Companion Server',
+        	'Implementation-Version': '1.0',
+        	'Main-Class': 'io.vertx.core.Starter'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
